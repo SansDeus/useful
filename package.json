@@ -1,0 +1,22 @@
+{
+	"name": "utilities",
+	"version": "1.0.0",
+	"description": "Various utilities",
+	"main": "./dist/out-tsc/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"Bezier",
+		"Animate",
+		"Smooth",
+		"Scroll",
+		"Colors",
+		"Easing"
+	],
+	"author": "Aaron Edwards",
+	"license": "ISC",
+	"dependencies": {
+		"lodash": "^4.17.10"
+	}
+}
