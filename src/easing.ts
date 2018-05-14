@@ -61,11 +61,11 @@ export class Easing {
 
 	getEasing(name: string) {
 		switch (name.toLowerCase()) {
-		case "easeInElastic":
+		case "easeinelastic":
 			return this.easeInElastic;
-		case "easeOutElastic":
+		case "easeoutelastic":
 			return this.easeOutElastic;
-		case "easeInOutElastic":
+		case "easeinoutelastic":
 			return this.easeInOutElastic;
 		default:
 			const values = this.easings.hasOwnProperty(name) ? this.easings[name] : this.easings["linear"];

@@ -1,1 +1,1 @@
-"# utilities" 
+Contains lerp, animation, bezier algorythm, decasteljau algorythm, easing, smooth scrolling.
