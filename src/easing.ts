@@ -1,7 +1,9 @@
 import {Bezier} from "./bezier";
+import RandomRange from "./randomrange";
 
 export class Easing {
 	private bezier = new Bezier();
+	private easingList = ["linear", "easeInSine", "easeOutSine", "easeInOutSine", "easeInQuad", "easeOutQuad", "easeInOutQuad", "easeInCubic", "easeOutCubic", "easeInOutCubic", "easeInQuart", "easeOutQuart", "easeInOutQuart", "easeInQuint", "easeOutQuint", "easeInOutQuint", "easeInExpo", "easeOutExpo", "easeInOutExpo", "easeInCirc", "easeOutCirc", "easeInOutCirc", "easeInBack", "easeOutBack", "easeInOutBack", "easeInElastic", "easeOutElastic", "easeInOutElastic"];
 	private easings = {
 		linear: [0.0, 0.0, 1.0, 1.0],
 		easeInSine: [0.47, 0, 0.745, 0.715],
@@ -58,6 +60,7 @@ export class Easing {
 	easeInElastic = (t: number) => (.04 - .04 / t) * Math.sin(25 * t) + 1;
 	easeOutElastic = (t: number) => .04 * t / (--t) * Math.sin(25 * t);
 	easeInOutElastic = (t: number) => (t -= .5) < 0 ? (.02 + .01 / t) * Math.sin(50 * t) : (0.02 - .01 / t) * Math.sin(50 * t) + 1;
+	random = this.getEasing("random");
 
 	getEasing(name: string) {
 		switch (name.toLowerCase()) {
@@ -67,6 +70,9 @@ export class Easing {
 			return this.easeOutElastic;
 		case "easeinoutelastic":
 			return this.easeInOutElastic;
+		case "random":
+			const easing = this.easingList[RandomRange(0, this.easingList.length - 1)];
+			return this.bezier.create.apply(this.bezier, this.easings[easing]);
 		default:
 			const values = this.easings.hasOwnProperty(name) ? this.easings[name] : this.easings["linear"];
 			return this.bezier.create.apply(this.bezier, values);

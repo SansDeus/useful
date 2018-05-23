@@ -1,0 +1,1 @@
+export default (start: number, end: number, time: number) => start * (1 - time) + end * time;

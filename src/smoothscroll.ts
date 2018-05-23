@@ -1,4 +1,4 @@
-import { Animate } from "./animate";
+import Animate from "./animate";
 import { Bezier } from "./bezier";
 import { Easing } from "./easing";
 
@@ -48,7 +48,7 @@ export class SmoothScroll {
 				offsetY + currentY + ((bounds.top + currentY) - currentY) * bez
 			);
 		};
-		Animate.animate(scroll,
+		Animate(scroll,
 			options && options.framesPerSecond ? options.framesPerSecond : this.framesPerSecond,
 			options && options.duration ? options.duration : this.duration, this.enablePointerEvents);
 	}

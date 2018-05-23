@@ -8,15 +8,13 @@
 	},
 	"keywords": [
 		"Bezier",
+		"Decasteljau",
 		"Animate",
-		"Smooth",
-		"Scroll",
+		"Smooth Scrolling",
+		"Lerp",
 		"Colors",
 		"Easing"
 	],
 	"author": "Aaron Edwards",
-	"license": "ISC",
-	"dependencies": {
-		"lodash": "^4.17.10"
-	}
+	"license": "ISC"
 }
