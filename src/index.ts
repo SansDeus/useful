@@ -4,7 +4,7 @@ import Decasteljau from "./decasteljau";
 import Curve from "./curve";
 import ThreeD from "./threeD";
 import RandomRange from "./randomrange";
-export { Animate, Lerp, Decasteljau, ThreeD, RandomRange };
+export { Animate, Lerp, Decasteljau, Curve, ThreeD, RandomRange };
 export * from "./bezier";
 export * from "./colorPercent";
 export * from "./easing";
