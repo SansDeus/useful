@@ -1,11 +1,11 @@
 import Animate from "./animate";
-export { Animate };
+import Lerp from "./lerp";
+import Decasteljau from "./decasteljau";
+import Curve from "./curve";
+import ThreeD from "./threeD";
+import RandomRange from "./randomrange";
+export { Animate, Lerp, Decasteljau, ThreeD, RandomRange };
 export * from "./bezier";
 export * from "./colorPercent";
-export * from "./decasteljau";
-import Lerp from "./lerp";
-export { Lerp };
 export * from "./easing";
 export * from "./smoothscroll";
-import RandomRange from "./randomrange";
-export { RandomRange };
