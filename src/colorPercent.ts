@@ -27,7 +27,7 @@ export class ColorPercent {
 		}
 		return null;
 	}
-
+                                                   
 	getColor = (colorList: string[], percent: number) => {
 		const stepInfo = colorList.calculateStep(percent);
 		const color = (position) => Math.floor(this.getRgb(stepInfo.startIndex)[position] * (stepInfo.lowpct) +

@@ -1,6 +1,6 @@
 {
 	"name": "useful",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Functions for animation, color transitions, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, and easing.",
 	"main": "./dist/out-tsc/index.js",
 	"scripts": {
