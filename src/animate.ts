@@ -1,12 +1,12 @@
-export default (action: (pct: number, stop?: boolean) => void, fps: number, speed: number, cb?: () => void) => {
-	const frameRate = (speed * 1000) / fps;
+export default (action: (pct: number) => void, options?: { fps?: number, speed?: number, stop?: () => boolean, cb?: () => void }) => {
+	const frameRate = ((options && options.speed ? options.speed : 1) * 1000) / (options && options.fps ? options.fps : 60);
 	const start = Date.now();
-	const endTime = start + (speed * 1000);
+	const endTime = start + ((options && options.speed ? options.speed : 1) * 1000);
 	const diff = endTime - start;
 	let frameCheck = start;
 	function smooth() {
-		if (stop) {
-			if (cb) cb();
+		if (options && options.stop && options.stop()) {
+			if (options.cb) options.cb();
 			return;
 		}
 		const now = Date.now();
@@ -21,7 +21,7 @@ export default (action: (pct: number, stop?: boolean) => void, fps: number, spee
 		if (now < endTime) {
 			window.requestAnimationFrame(smooth);
 		} else {
-			if(cb) cb();
+			if(options && options.cb) options.cb();
 		}
 	};
 	window.requestAnimationFrame(smooth);

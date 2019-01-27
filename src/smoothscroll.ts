@@ -13,7 +13,6 @@ export interface IScrollOptions {
 export class SmoothScroll {
 	framesPerSecond = 60;
 	duration = .3;
-	private bezier = new Bezier();
 	private easing = new Easing();
 
 	//	.disable-hover {
@@ -48,8 +47,9 @@ export class SmoothScroll {
 				offsetY + currentY + ((bounds.top + currentY) - currentY) * bez
 			);
 		};
-		Animate(scroll,
-			options && options.framesPerSecond ? options.framesPerSecond : this.framesPerSecond,
-			options && options.duration ? options.duration : this.duration, this.enablePointerEvents);
+		Animate(scroll, {
+			fps: options && options.framesPerSecond ? options.framesPerSecond : this.framesPerSecond,
+			speed: options && options.duration ? options.duration : this.duration, 
+			cb: this.enablePointerEvents});
 	}
 }
