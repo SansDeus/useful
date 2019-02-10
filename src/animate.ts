@@ -6,7 +6,6 @@ export default (action: (pct: number) => void, options?: { fps?: number, speed?:
 	let frameCheck = start;
 	function smooth() {
 		if (options && options.stop && options.stop()) {
-			if (options.cb) options.cb();
 			return;
 		}
 		const now = Date.now();
