@@ -7,13 +7,11 @@ export class Swipe {
         this.elm.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: true });
     }
     handleTouchStart(event) {
-        event.preventDefault();
         const initTouch = event.touches[0];
         this.x1 = initTouch.clientX;
         this.y1 = initTouch.clientY;
     }
     handleTouchMove(event) {
-        event.preventDefault();
         if (!this.x1 || !this.y1) {
             return;
         }

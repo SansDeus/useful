@@ -13,14 +13,12 @@ export class Swipe {
 	private defaultSwipe = { left: () => {}, right: () => {}, up: () => {}, down: () => {}};
 
 	private handleTouchStart(event: TouchEvent) {
-		event.preventDefault();
 		const initTouch = event.touches[0];
 		this.x1 = initTouch.clientX;
 		this.y1 = initTouch.clientY;
 	}
 
 	private handleTouchMove(event: TouchEvent) {
-		event.preventDefault();
 		if (!this.x1 || !this.y1) { return; }
 		const nowTouch = event.touches[0];
 		const [x2, y2] = [nowTouch.clientX, nowTouch.clientY];
