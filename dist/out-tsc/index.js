@@ -3,12 +3,12 @@ import Lerp from "./lerp";
 import Curve from "./curve";
 import ThreeD from "./threeD";
 import RandomRange from "./randomrange";
-import { Swipe } from './swipe';
-export { Animate, Lerp, Curve, ThreeD, RandomRange, Swipe };
+import Sorter from './sorter';
+export { Animate, Lerp, Curve, ThreeD, RandomRange, Sorter };
 export * from "./decasteljau";
 export * from "./bezier";
 export * from "./colorPercent";
 export * from "./easing";
 export * from "./smoothscroll";
-export * from "./sorter";
+export * from "./swipe";
 //# sourceMappingURL=index.js.map
