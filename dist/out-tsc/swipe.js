@@ -1,10 +1,12 @@
 export class Swipe {
     constructor(element, events) {
+        this.supportsPassive = false;
         this.defaultSwipe = { left: () => { }, right: () => { }, up: () => { }, down: () => { } };
+        this.passiveTest();
         this.swipeEvents = events ? this.assignSwipe(events) : this.defaultSwipe;
         this.elm = element;
-        this.elm.addEventListener('touchstart', (e) => this.handleTouchStart(e), false);
-        this.elm.addEventListener('touchmove', (e) => this.handleTouchMove(e), false);
+        this.elm.addEventListener('touchstart', (e) => this.handleTouchStart(e), this.supportsPassive ? { passive: true } : false);
+        this.elm.addEventListener('touchmove', (e) => this.handleTouchMove(e), this.supportsPassive ? { passive: true } : false);
     }
     handleTouchStart(event) {
         event.preventDefault();
@@ -46,9 +48,23 @@ export class Swipe {
             down: !events.down ? this.defaultSwipe.down : events.down
         };
     }
+    passiveTest() {
+        try {
+            const opts = Object.defineProperty({}, 'passive', {
+                get: function () {
+                    this.supportsPassive = true;
+                }
+            });
+            window.addEventListener('testPassive', null, opts);
+            window.removeEventListener('testPassive', null, opts);
+        }
+        catch (e) { }
+    }
     Destroy() {
-        this.elm.removeEventListener('touchstart', this.handleTouchStart, { capture: false });
-        this.elm.removeEventListener('touchmove', this.handleTouchMove, { capture: false });
+        if (this.elm) {
+            this.elm.removeEventListener('touchstart', this.handleTouchStart, { capture: false });
+            this.elm.removeEventListener('touchmove', this.handleTouchMove, { capture: false });
+        }
     }
     SetSwipe(events) {
         this.swipeEvents = this.assignSwipe(events);
