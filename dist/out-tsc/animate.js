@@ -1,13 +1,11 @@
-export default (action, fps, speed, cb) => {
-    const frameRate = (speed * 1000) / fps;
+export default (action, options) => {
+    const frameRate = ((options && options.speed ? options.speed : 1) * 1000) / (options && options.fps ? options.fps : 60);
     const start = Date.now();
-    const endTime = start + (speed * 1000);
+    const endTime = start + ((options && options.speed ? options.speed : 1) * 1000);
     const diff = endTime - start;
     let frameCheck = start;
     function smooth() {
-        if (stop) {
-            if (cb)
-                cb();
+        if (options && options.stop && options.stop()) {
             return;
         }
         const now = Date.now();
@@ -23,8 +21,8 @@ export default (action, fps, speed, cb) => {
             window.requestAnimationFrame(smooth);
         }
         else {
-            if (cb)
-                cb();
+            if (options && options.cb)
+                options.cb();
         }
     }
     ;

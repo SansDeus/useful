@@ -1,11 +1,9 @@
 import Animate from "./animate";
-import { Bezier } from "./bezier";
 import { Easing } from "./easing";
 export class SmoothScroll {
     constructor() {
         this.framesPerSecond = 60;
         this.duration = .3;
-        this.bezier = new Bezier();
         this.easing = new Easing();
     }
     //	.disable-hover {
@@ -35,7 +33,11 @@ export class SmoothScroll {
             const bez = easeFunc(pct);
             window.scrollTo(offsetX + currentX + ((bounds.left + currentX) - currentX) * bez, offsetY + currentY + ((bounds.top + currentY) - currentY) * bez);
         };
-        Animate(scroll, options && options.framesPerSecond ? options.framesPerSecond : this.framesPerSecond, options && options.duration ? options.duration : this.duration, this.enablePointerEvents);
+        Animate(scroll, {
+            fps: options && options.framesPerSecond ? options.framesPerSecond : this.framesPerSecond,
+            speed: options && options.duration ? options.duration : this.duration,
+            cb: this.enablePointerEvents
+        });
     }
 }
 //# sourceMappingURL=smoothscroll.js.map
