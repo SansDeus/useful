@@ -10,7 +10,6 @@ export class Swipe {
 	private y1: number;
 	private swipeEvents: ISwipeEvents;
 	private elm: HTMLElement;
-	private supportsPassive = false;
 	private defaultSwipe = { left: () => {}, right: () => {}, up: () => {}, down: () => {}};
 
 	private handleTouchStart(event: TouchEvent) {
@@ -43,18 +42,6 @@ export class Swipe {
 		};
 	}
 
-	private passiveTest() {
-		try {
-			const opts = Object.defineProperty({}, 'passive', {
-				get: function() {
-				this.supportsPassive = true;
-				}
-			});
-			window.addEventListener('testPassive', null, opts);
-			window.removeEventListener('testPassive', null, opts);
-		} catch (e) {}
-	}
-
 	Destroy() {
 		if (this.elm) {
 			this.elm.removeEventListener('touchstart', this.handleTouchStart, { capture: false });
@@ -67,10 +54,9 @@ export class Swipe {
 	}
 
 	constructor(element: HTMLElement, events?: ISwipeEvents) {
-		this.passiveTest();
 		this.swipeEvents = events ? this.assignSwipe(events) : this.defaultSwipe;
 		this.elm = element;
-		this.elm.addEventListener('touchstart', (e) => this.handleTouchStart(e), this.supportsPassive ? { passive: true } : false);
-		this.elm.addEventListener('touchmove', (e) => this.handleTouchMove(e), this.supportsPassive ? { passive: true } : false);
+		this.elm.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true } );
+		this.elm.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: true } );
 	}
 }
