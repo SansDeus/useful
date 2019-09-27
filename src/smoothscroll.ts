@@ -1,5 +1,4 @@
 import Animate from "./animate";
-import { Bezier } from "./bezier";
 import { Easing } from "./easing";
 
 export interface IScrollOptions {
