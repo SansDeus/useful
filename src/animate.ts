@@ -1,7 +1,7 @@
-export default (action: (pct: number) => void, options?: { fps?: number, speed?: number, stop?: () => boolean, cb?: () => void }) => {
-	const frameRate = ((options && options.speed ? options.speed : 1) * 1000) / (options && options.fps ? options.fps : 60);
+export default (action: (pct: number) => void, options?: { fps?: number, seconds?: number, stop?: () => boolean, cb?: () => void }) => {
+	const frameRate = ((options && options.seconds ? options.seconds : 1) * 1000) / (options && options.fps ? options.fps : 60);
 	const start = Date.now();
-	const endTime = start + ((options && options.speed ? options.speed : 1) * 1000);
+	const endTime = start + ((options && options.seconds ? options.seconds : 1) * 1000);
 	const diff = endTime - start;
 	let frameCheck = start;
 	function smooth() {
