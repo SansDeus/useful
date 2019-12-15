@@ -1,7 +1,7 @@
 import Decasteljau from './decasteljau';
-export default (points: { x: number, y: number }[], time: number) => {
+export default (points: { x: number, y: number }[], percent: number) => {
 	return { 
-		x: Decasteljau.calculate(points.map((p) => p.x), time), 
-		y: Decasteljau.calculate(points.map((p) => p.y), time) 
+		x: Decasteljau.calculate(points.map((p) => p.x), percent), 
+		y: Decasteljau.calculate(points.map((p) => p.y), percent) 
 	};
 }
