@@ -1,1 +1,1 @@
-export default (start: number, end: number, time: number) => start * (1 - time) + end * time;
+export default (start: number, end: number, percent: number) => start * (1 - percent) + end * percent;
