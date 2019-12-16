@@ -15,10 +15,10 @@ const colorPercent = new ColorPercent();
 colorPercent.getColor(colorList: string[], percent: number)
 
 ## Curves
-Curves(points: { x: number, y: number }[], time: number)
+Curves(points: { x: number, y: number }[], percent: number)
 
 ## Decasteljau
-Decasteljau.calculate(points: number[], time: number) 
+Decasteljau.calculate(points: number[], percent: number) 
 
 ## Easing
 This can be called either by the easing type or by name.
@@ -30,7 +30,7 @@ const easing = new Easing().linear;
 *Easing types include:* linear, easeInSine, easeOutSine, easeInOutSine, easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic, easeInOutCubic, easeInQuart, easeOutQuart, easeInOutQuart, easeInQuint, easeOutQuint, easeInOutQuint, easeInExpo, easeOutExpo, easeInOutExpo, easeInCirc, easeOutCirc, easeInOutCirc, easeInBack, easeOutBack, easeInOutBack, easeInElastic, easeOutElastic, easeInOutElastic, random.
 
 ## Lerp
-*Lerp*(start: number, end: number, time: number)
+*Lerp*(start: number, end: number, percent: number)
 
 ## RandomRange
 RandomRange(min: number, max: number)
@@ -63,4 +63,4 @@ ISwipeEvents {
 }
 
 ## ThreeD
-ThreeD(points: { x: number, y: number, z: number }[], time: number)
+ThreeD(points: { x: number, y: number, z: number }[], percent: number)
