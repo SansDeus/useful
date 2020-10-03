@@ -6,8 +6,8 @@ export interface ISwipeEvents {
 }
 
 export class Swipe {
-	private x1: number;
-	private y1: number;
+	private x1: number | null = 0;
+	private y1: number | null = 0;
 	private swipeEvents: ISwipeEvents;
 	private elm: HTMLElement;
 	private defaultSwipe = { left: () => {}, right: () => {}, up: () => {}, down: () => {}};
@@ -24,9 +24,11 @@ export class Swipe {
 		const [x2, y2] = [nowTouch.clientX, nowTouch.clientY];
 		const [xDiff, yDiff] = [this.x1 - x2, this.y1 - y2];
 		if (Math.abs(xDiff) > Math.abs(yDiff)) {
-			if (xDiff > 0) { this.swipeEvents.left(); } else { this.swipeEvents.right(); }
+			if (xDiff > 0) { this.swipeEvents.left ? this.swipeEvents.left() : () => {}; } 
+			else { this.swipeEvents.right ? this.swipeEvents.right() : () => {}; }
 		} else {
-			if (yDiff > 0) { this.swipeEvents.up(); } else { this.swipeEvents.down(); }
+			if (yDiff > 0) { this.swipeEvents.up ? this.swipeEvents.up() : () => {}; } 
+			else { this.swipeEvents.down ? this.swipeEvents.down() : () => {}; }
 		}
 		[this.x1, this.y1] = [null, null];
 	}

@@ -46,7 +46,8 @@ export class Bezier {
 		return aGuessT;
 	}
 
-	create(mX1: number, mY1: number, mX2: number, mY2: number) {
+	create(coords: number[]) {
+		const [mX1, mY1, mX2, mY2] = coords;
 		const sampleValues = this.float32ArraySupported()
 			? new Float32Array(this.kSplineTableSize)
 			: new Array(this.kSplineTableSize);

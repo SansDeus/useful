@@ -48,7 +48,7 @@ export class SmoothScroll {
 		};
 		Animate(scroll, {
 			fps: options && options.framesPerSecond ? options.framesPerSecond : this.framesPerSecond,
-			speed: options && options.duration ? options.duration : this.duration, 
+			duration: options && options.duration ? options.duration : this.duration, 
 			cb: this.enablePointerEvents});
 	}
 }

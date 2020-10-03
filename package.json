@@ -1,8 +1,8 @@
 {
 	"name": "ts-useful",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Functions for animation, color transitions, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, and easing.",
-	"main": "./dist/out-tsc/index.js",
+	"main": "./lib/index.js",
 	"private": false,
 	"repository": {
 		"type": "git",
