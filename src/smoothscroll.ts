@@ -7,11 +7,12 @@ export interface IScrollOptions {
 	framesPerSecond?: number;
 	duration?: number;
 	easingFunc?: (t: number) => number;
+	done?: () => void;
 }
 
 export class SmoothScroll {
 	framesPerSecond = 60;
-	duration = .3;
+	duration = 300;
 	private easing = new Easing();
 
 	//	.disable-hover {
@@ -31,24 +32,36 @@ export class SmoothScroll {
 		}
 	}
 
+	getLocation(element: HTMLElement, options?: IScrollOptions) {
+		return { 
+			bounds: element.getBoundingClientRect(),
+			currentY: window.pageYOffset,
+			currentX: window.pageXOffset,
+			offsetY: options ? options.offsetY || 0 : 0,
+			offsetX: options ? options.offsetX || 0 : 0
+		};
+	}
+
 	scroll(element: HTMLElement, options?: IScrollOptions) {
 		this.disablePointerEvents();
 		const easeFunc = options && options.easingFunc ? options.easingFunc : this.easing.linear;
-		const bounds = element.getBoundingClientRect();
-		const currentY = window.pageYOffset;
-		const currentX = window.pageXOffset;
-		const offsetY = options ? options.offsetY || 0 : 0;
-		const offsetX = options ? options.offsetX || 0 : 0;
+		const l = this.getLocation(element, options);
 		const scroll = (pct: number) => {
 			const bez = easeFunc(pct);
 			window.scrollTo(
-				offsetX + currentX + ((bounds.left + currentX) - currentX) * bez,
-				offsetY + currentY + ((bounds.top + currentY) - currentY) * bez
+				l.offsetX + l.currentX + (l.bounds.left) * bez,
+				l.offsetY + l.currentY + (l.bounds.top) * bez
 			);
 		};
 		Animate(scroll, {
 			fps: options && options.framesPerSecond ? options.framesPerSecond : this.framesPerSecond,
 			duration: options && options.duration ? options.duration : this.duration, 
-			cb: this.enablePointerEvents});
+			cb: () => { 
+				this.enablePointerEvents();
+				if(options?.done) {
+					options.done();
+				}
+			}
+		}); 
 	}
 }
