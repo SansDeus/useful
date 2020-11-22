@@ -9,7 +9,7 @@ pids
 node_modules
 lib
 dist
-tests
+test
 .vscode
 .nyc_output
 coverage

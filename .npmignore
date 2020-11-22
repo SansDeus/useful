@@ -3,6 +3,7 @@ src/
 .babelrc
 specs
 test
+tests
 
 # Logs
 logs
