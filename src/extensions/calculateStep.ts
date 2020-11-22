@@ -1,20 +1,20 @@
-type StepInfo = { highpct: number, lowpct: number, startIndex: string, endIndex: string };
-
+type StepInfo = { percent: number, inverse: number, current: string, next: string };
 interface Array<T> {
-	calculateStep(percent: number): StepInfo;
+	calculateStep(percent: number): StepInfo;	
 }
 
 if (!Array.prototype.calculateStep) {
 	Array.prototype.calculateStep =
 		function (percent: number): StepInfo {
 			percent = Math.max(Math.min(1, percent), 0);
-			const modifier = ((this.length - 1) * percent);
-			const step = Math.floor(modifier);
+			const progress = ((this.length - 1) * percent);
+			const index = Math.floor(progress);
+			const pct = (progress - index);
 			return {
-				highpct: (modifier - step),
-				lowpct: (1 - (modifier - step)),
-				startIndex: this[step],
-				endIndex: percent === 1 ? this[step] : this[step + 1]
+				percent: pct,
+				inverse: (1 - pct),
+				current: this[index],
+				next: percent === 1 ? this[index] : this[index + 1]
 			};
 		}
 }

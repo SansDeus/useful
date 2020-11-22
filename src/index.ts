@@ -1,12 +1,13 @@
 import Animate from "./animate";
+import Bezier from "./bezier";
 import Lerp from "./lerp";
 import Curve from "./curve";
 import ThreeD from "./threeD";
-import RandomRange from "./randomrange";
+import RandomRange from './randomrange';
+import RandomItem from './randomrange';
 import Sorter from './sorter';
-export { Animate, Lerp, Curve, ThreeD, RandomRange, Sorter };
+export { Animate, Bezier, Lerp, Curve, ThreeD, RandomItem, RandomRange, Sorter };
 export * from "./decasteljau";
-export * from "./bezier";
 export * from "./colorPercent";
 export * from "./easing";
 export * from "./smoothscroll";

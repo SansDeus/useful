@@ -1,7 +1,7 @@
 {
 	"name": "ts-useful",
-	"version": "1.0.7",
-	"description": "Functions for animation, color transitions, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, and easing.",
+	"version": "1.0.8",
+	"description": "Functions for animation, color transitions, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, random range, randomItem, and easing.",
 	"main": "./lib/index.js",
 	"private": false,
 	"repository": {
@@ -20,8 +20,16 @@
 		"Smooth Scrolling",
 		"Lerp",
 		"Colors",
-		"Easing"
+		"Easing",
+		"Random range",
+		"Random item",
+		"Sorting",
+		"Swipe"
 	],
 	"author": "Aaron Edwards",
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"ts-node": "^9.0.0",
+		"typescript": "^4.1.2"
+	}
 }

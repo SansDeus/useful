@@ -13,7 +13,6 @@ export interface IScrollOptions {
 export class SmoothScroll {
 	framesPerSecond = 60;
 	duration = 300;
-	private easing = new Easing();
 
 	//	.disable-hover {
 	//		pointer-events: none;
@@ -44,7 +43,7 @@ export class SmoothScroll {
 
 	scroll(element: HTMLElement, options?: IScrollOptions) {
 		this.disablePointerEvents();
-		const easeFunc = options && options.easingFunc ? options.easingFunc : this.easing.linear;
+		const easeFunc = options && options.easingFunc ? options.easingFunc : Easing.linear;
 		const l = this.getLocation(element, options);
 		const scroll = (pct: number) => {
 			const bez = easeFunc(pct);
