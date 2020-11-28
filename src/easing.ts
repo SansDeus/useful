@@ -1,4 +1,4 @@
-import {Bezier} from "./index";
+import Bezier from "./bezier";
 import randomItem from "./randomItem";
 
 export class Easing {
