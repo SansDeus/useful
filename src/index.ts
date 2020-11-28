@@ -4,7 +4,7 @@ import Lerp from "./lerp";
 import Curve from "./curve";
 import ThreeD from "./threeD";
 import RandomRange from './randomrange';
-import RandomItem from './randomrange';
+import RandomItem from './randomItem';
 import Sorter from './sorter';
 export { Animate, Bezier, Lerp, Curve, ThreeD, RandomItem, RandomRange, Sorter };
 export * from "./decasteljau";
