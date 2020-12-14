@@ -1,4 +1,5 @@
 import * as Animate from "./animate";
+import * as Away from './away';
 import * as Bezier from "./bezier";
 import * as Lerp from "./lerp";
 import * as Curve from "./curve";
@@ -6,7 +7,7 @@ import * as ThreeD from "./threeD";
 import * as RandomRange from './randomrange';
 import * as RandomItem from './randomItem';
 import * as Sorter from './sorter';
-export { Animate, Bezier, Lerp, Curve, ThreeD, RandomItem, RandomRange, Sorter };
+export { Animate, Away, Bezier, Lerp, Curve, ThreeD, RandomItem, RandomRange, Sorter };
 export * from "./decasteljau";
 export * from "./colorPercent";
 export * from "./easing";
