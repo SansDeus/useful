@@ -1,4 +1,4 @@
-import Animate from "./animate";
+import { Animate } from "./animate";
 import { Easing } from "./easing";
 
 export interface IScrollOptions {

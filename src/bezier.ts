@@ -3,7 +3,7 @@
  * BezierEasing - use bezier curve for transition easing function
  * by Gaëtan Renaudeau 2014 - 2015 – MIT License
  */
-export default (values: number[]) => {
+export const Bezier = (values: number[]) => {
 	if(values.length === 0) return (v: number) => 0;
 	const newtonIterations = 4;
 	const newtonMinSlope = 0.001;

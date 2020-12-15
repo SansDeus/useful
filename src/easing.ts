@@ -1,5 +1,5 @@
-import Bezier from "./bezier";
-import randomItem from "./randomItem";
+import {Bezier} from "./bezier";
+import {RandomItem} from "./randomItem";
 
 export class Easing {
 	public static linear = Bezier([0.0, 0.0, 1.0, 1.0]);
@@ -30,7 +30,7 @@ export class Easing {
 	public static easeInElastic = (t: number) => (.04 - .04 / t) * Math.sin(25 * t) + 1;
 	public static easeOutElastic = (t: number) => .04 * t / (--t) * Math.sin(25 * t);
 	public static easeInOutElastic = (t: number) => (t -= .5) < 0 ? (.02 + .01 / t) * Math.sin(50 * t) : (0.02 - .01 / t) * Math.sin(50 * t) + 1;
-	public static random = () => randomItem([
+	public static random = () => RandomItem([
 		Easing.easeInSine,       	Easing.easeOutSine,			Easing.easeInOutSine,    	Easing.easeInQuad,
 		Easing.easeOutQuad,      	Easing.easeInOutQuad,		Easing.easeInCubic,     	Easing.easeOutCubic,
 		Easing.easeInOutCubic,   	Easing.easeInQuart,			Easing.easeOutQuart,     	Easing.easeInOutQuart,

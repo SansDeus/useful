@@ -1,4 +1,2 @@
-import RandomRange from './randomrange';
-export default (array: any[]): any => {
-	return array[RandomRange(0, array.length - 1)];
-};
+import {RandomRange} from './randomrange';
+export const RandomItem = (array: any[]): any => array[RandomRange(0, array.length - 1)];

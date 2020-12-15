@@ -1,11 +1,15 @@
-export default (action: (pct: number) => void, options?: { fps?: number, duration?: number, stop?: () => boolean, cb?: () => void }) => {
-	const frameRate = (options && options.duration ? options.duration : 1000) / (options && options.fps ? options.fps : 60);
+export const Animate = (action: (pct: number) => void, options?: { fps?: number, duration?: number, stop?: () => boolean, cb?: () => void }) => {
+	let { duration, fps, stop, cb } = options ? options : { duration: undefined, fps: undefined, stop: undefined, cb: undefined };
+	duration ||= 1000;
+	fps ||= 60;
+	const frameRate = duration / fps;
 	const start = Date.now();
-	const endTime = start + (options && options.duration ? options.duration : 1000);
+	const endTime = start + duration;
 	const diff = endTime - start;
 	let frameCheck = start;
-	function smooth() {
-		if (options && options.stop && options.stop()) {
+	//Should be able to get pct and duration to calulate when to start again on the other side for pause functionality.
+	function AnimateFrame() {
+		if (stop && stop()) {
 			return;
 		}
 		const now = Date.now();
@@ -13,15 +17,14 @@ export default (action: (pct: number) => void, options?: { fps?: number, duratio
 		const elapsed = now - frameCheck;
 		if (elapsed > frameRate) {
 			frameCheck = now - (elapsed % frameRate);
-			let pct = timePast / diff;
-			pct = Math.max(0, Math.min(1, pct));
+			const pct = Math.max(0, Math.min(1, timePast / diff));
 			action(pct);
 		}
 		if (now < endTime) {
-			window.requestAnimationFrame(smooth);
+			window.requestAnimationFrame(AnimateFrame);
 		} else {
-			if(options && options.cb) options.cb();
+			if(cb) cb();
 		}
 	};
-	window.requestAnimationFrame(smooth);
+	window.requestAnimationFrame(AnimateFrame);
 }

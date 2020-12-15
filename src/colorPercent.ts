@@ -2,7 +2,7 @@ import "./extensions/calculateStep";
 
 type rxCompare = { regex: RegExp, converter: (e: any) => number[] };
 export class ColorPercent {
-	private regexArray: rxCompare[] = [
+	private static regexArray: rxCompare[] = [
 		// #a0b1c2
 		{ regex: /#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})/i, 
 			converter: (e: RegExpExecArray) => [parseInt(e[1].toString(), 16), parseInt(e[2].toString(), 16), parseInt(e[3].toString(), 16)] },
@@ -17,22 +17,22 @@ export class ColorPercent {
 			converter: (e: RegExpExecArray) => [parseFloat(e[1]) * 2.55, parseFloat(e[2]) * 2.55, parseFloat(e[3]) * 2.55] }
 	];
 
-	private getRgb = (color: string | number[]) : number[] =>
+	private static getRgb = (color: string | number[]) : number[] =>
 	{
 		if (color && Array.isArray(color) && color.length === 3) {
 			return color;
 		}
 		if(typeof color === "string") {
-			const rxc = this.regexArray.find((rx: rxCompare) => rx.regex.test(color));
+			const rxc = ColorPercent.regexArray.find((rx: rxCompare) => rx.regex.test(color));
 			if(rxc) return rxc.converter(rxc.regex.exec(color));
 		}
 		throw new Error('getRgb: Invalid color.');
 	}
                                                    
-	getColor = (colorList: string[], percent: number) => {
+	static getColor = (colorList: string[], percent: number) => {
 		const stepInfo = colorList.calculateStep(percent);
 		const color = (position: number) => {
-			const [startColor, endColor] = [this.getRgb(stepInfo.current), this.getRgb(stepInfo.next)];
+			const [startColor, endColor] = [ColorPercent.getRgb(stepInfo.current), ColorPercent.getRgb(stepInfo.next)];
 			if(startColor && endColor) return Math.floor(startColor[position] * (stepInfo.inverse) + endColor[position] * (stepInfo.percent));
 			throw new Error(`getColor: Invalid color start: ${startColor} end: ${endColor}`);
 		};

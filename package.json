@@ -1,6 +1,6 @@
 {
 	"name": "ts-useful",
-	"version": "1.0.14",
+	"version": "1.0.15",
 	"description": "Functions for animation, away, color transitions, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, random range, randomItem, and easing.",
 	"main": "./lib/index.js",
 	"private": false,
