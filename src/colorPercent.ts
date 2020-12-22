@@ -1,4 +1,5 @@
 import "./extensions/calculateStep"; 
+import { Lerp } from './lerp';
 
 type rxCompare = { regex: RegExp, converter: (e: any) => number[] };
 export class ColorPercent {
@@ -33,7 +34,7 @@ export class ColorPercent {
 		const stepInfo = colorList.calculateStep(percent);
 		const color = (position: number) => {
 			const [startColor, endColor] = [ColorPercent.getRgb(stepInfo.current), ColorPercent.getRgb(stepInfo.next)];
-			if(startColor && endColor) return Math.floor(startColor[position] * (stepInfo.inverse) + endColor[position] * (stepInfo.percent));
+			if(startColor && endColor) return Math.floor(Lerp(startColor[position], endColor[position], stepInfo.percent));
 			throw new Error(`getColor: Invalid color start: ${startColor} end: ${endColor}`);
 		};
 		const colorDecToHex = (r: number, g: number, b: number) => `#${(1 << 24 | (r << 16) | (g << 8) | (b << 0)).toString(16).substring(1)}`;

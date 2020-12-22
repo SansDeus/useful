@@ -1,4 +1,4 @@
-type StepInfo = { percent: number, inverse: number, current: string, next: string };
+type StepInfo = { percent: number, current: string, next: string };
 interface Array<T> {
 	calculateStep(percent: number): StepInfo;	
 }
@@ -12,7 +12,6 @@ if (!Array.prototype.calculateStep) {
 			const pct = (progress - index);
 			return {
 				percent: pct,
-				inverse: (1 - pct),
 				current: this[index],
 				next: percent === 1 ? this[index] : this[index + 1]
 			};

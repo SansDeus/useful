@@ -1,1 +1,1 @@
-export const Lerp = (start: number, end: number, percent: number) => start * (1 - percent) + end * percent;
+export const Lerp = (start: number, end: number, percent: number) => start - ((start - end) * percent);
