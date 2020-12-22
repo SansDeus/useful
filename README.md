@@ -6,7 +6,7 @@ Contains:
 ## Animate 
 *Animate*(action: (pct: number) => void , options?: { fps?: number, duration?: number, stop?: () => boolean, cb?: () => void });
 ```
-import {Animate, Easing} from "ts-useful";
+import {Animate, Easing} from 'ts-useful';
 function scoot(elm: HTMLElement, x: number): void {
   const move = (pct: number) => {
     elm.style.left = `${Easing.linear(pct)}px`;
@@ -17,20 +17,20 @@ function scoot(elm: HTMLElement, x: number): void {
 ## Bezier
 *Bezier*(number[]) returns (percentage: number) => number;
 ```
-import {Bezier} from "ts-useful";
+import {Bezier} from 'ts-useful';
 bezier = Bezier([0.0, 0.0, 1.0, 1.0]);
 bezier(.2);
 ```
 ## ColorPercent
 *ColorPercent.getColor*(colorList: string[], percent: number);
 ```
-import {ColorPercent} from "ts-useful";
+import {ColorPercent} from 'ts-useful';
 ColorPercent.getColor(['#FF00FF', '#889900', '#336699'], .45);
 ```
 ## Curves
 *Curves*(points: { x: number, y: number }[], percent: number)
 ```
-import {Curves} from "ts-useful";
+import {Curves} from 'ts-useful';
 const points = [
   { x: 10, y: 0 },
   { x: 30, y: 30 },
