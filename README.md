@@ -9,7 +9,7 @@ Contains:
 import {Animate, Easing} from "ts-useful";
 function scoot(elm: HTMLElement, x: number): void {
   const move = (pct: number) => {
-    elm.style.left = \`${Easing.linear(pct)}px\`;
+    elm.style.left = `${Easing.linear(pct)}px`;
   }
   Animate(move, { fps: 60, duration: 3000 });
 }
