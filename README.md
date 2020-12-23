@@ -21,6 +21,12 @@ import {Bezier} from 'ts-useful';
 bezier = Bezier([0.0, 0.0, 1.0, 1.0]);
 bezier(.2);
 ```
+## Clamp, ClampAngle, ClampRadian
+These functions will make sure a number stays between the min and max values.
+*Clamp*(amount: number, min: number, max: number);
+*ClampAngle*(amount: number, min: number, max: number);
+*ClampRadian*(amount: number, min: number, max: number);
+
 ## ColorPercent
 *ColorPercent.getColor*(colorList: string[], percent: number);
 ```
@@ -52,8 +58,26 @@ const easing = Easing.linear;
 easing(.03);
 *or*
 Easing.linear(.03);
+
+*Random is a little different.*
+const easing = Easing.random();
+easing(.03);
 ```
-*Easing types include:* linear, easeInSine, easeOutSine, easeInOutSine, easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic, easeOutCubic, easeInOutCubic, easeInQuart, easeOutQuart, easeInOutQuart, easeInQuint, easeOutQuint, easeInOutQuint, easeInExpo, easeOutExpo, easeInOutExpo, easeInCirc, easeOutCirc, easeInOutCirc, easeInBack, easeOutBack, easeInOutBack, easeInElastic, easeOutElastic, easeInOutElastic, random.
+*Easing types include:* linear, inSine, outSine, inOutSine, inQuad, outQuad, inOutQuad, inCubic, outCubic, inOutCubic, inQuart, outQuart, inOutQuart, inQuint, outQuint, inOutQuint, inExpo, outExpo, inOutExpo, inCirc, outCirc, inOutCirc, inBack, outBack, inOutBack, inElastic, outElastic, inOutElastic, random.
+
+## Ecliptic
+Class to allow placing items at coordinates based on an HTMLElement or coordinate { x: number, y: number }
+For the surround function place any surrounding items as children of the original item and give them a css position: absolute;
+*Ecliptic.Surround*(item: htmlCoordinate, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions);
+*Ecliptic.LocationByDegree*(center: htmlCoordinate, radius: number, degree: number);
+*surroundOptions*: { distance?: number, degree?: number, spacing?: number };
+Distance is the radius from the center/point, degree is the item offset around the parent, spacing will place the items the number of degrees away.
+```
+const parent = document.getElementById('toSurround');
+const kids = document.getElementsByClassName('childItems');
+Ecliptic.Surround(parent, kids, { degree: 90, distance: 120 });
+Ecliptic.LocationByDegree(parent, 100, 180);
+```
 
 ## Lerp
 *Lerp*(start: number, end: number, percent: number)

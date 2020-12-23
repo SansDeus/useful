@@ -5,9 +5,9 @@ type surroundOptions = { distance?: number, degree?: number, spacing?: number };
  * Ecliptic static class uses simple trig for circle calculation.
  */
 export class Ecliptic {
-	private static tao = Math.PI * 2;
-	private static deg2Rad = Ecliptic.tao / 360;
-	static EqualRadians = (count: number) => Ecliptic.tao / count;
+	private static tau = Math.PI * 2;
+	private static deg2Rad = Ecliptic.tau / 360;
+	static EqualRadians = (count: number) => Ecliptic.tau / count;
 	static EqualDegrees = (count: number) => 360 / count;
 
 	private static itemCenter = (item: htmlCoordinate) => {
@@ -45,6 +45,12 @@ export class Ecliptic {
 		};
 	}
 
+	private static htmlCollectionToArray = (items: HTMLCollection): HTMLElement[] => {
+		return (Array.apply(null, new Array(items.length)) as HTMLElement[]).map((e, i) => {
+			return items[i] as HTMLElement;
+		});
+	}
+
 	static LocationByRadian = (center: htmlCoordinate, radius: number, radian: number) => {
 		center = (center instanceof HTMLElement) ? Ecliptic.itemLocation(center) : center;
 		return {
@@ -59,11 +65,12 @@ export class Ecliptic {
 		return Ecliptic.LocationByRadian(center, radius, radian);
 	}
 
-	static Surround = (item: htmlCoordinate, withItems: HTMLElement[], options: surroundOptions) => {
+	static Surround = (item: htmlCoordinate, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions) => {
 		const { distance, degree, equal, spacing } = Ecliptic.surroundDefaults(options);
 		const { radians, center, radius } = Ecliptic.rcr(item, withItems.length, distance);
 		const separation = spacing * Ecliptic.deg2Rad;
 		let radian = degree * Ecliptic.deg2Rad;
+		if (withItems instanceof HTMLCollection) { withItems = Ecliptic.htmlCollectionToArray(withItems); }
 		withItems.forEach((e: HTMLElement, i: number): void => {
 			const coord = Ecliptic.LocationByRadian(center, radius, radian);
 			const b = e.getBoundingClientRect();
