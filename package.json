@@ -1,6 +1,6 @@
 {
 	"name": "ts-useful",
-	"version": "1.0.17",
+	"version": "1.0.18",
 	"description": "Functions for animation, color transitions, ecliptic, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, random range, randomItem, and easing.",
 	"main": "./lib/index.js",
 	"private": false,

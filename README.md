@@ -70,7 +70,7 @@ Class to allow placing items at coordinates based on an HTMLElement or coordinat
 For the surround function place any surrounding items as children of the original item and give them a css position: absolute;
 *Ecliptic.Surround*(item: htmlCoordinate, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions);
 *Ecliptic.LocationByDegree*(center: htmlCoordinate, radius: number, degree: number);
-*surroundOptions*: { distance?: number, degree?: number, spacing?: number };
+*surroundOptions*: { distance?: number, degree?: number, spacing?: number, amplitudeX: number, amplitudeY: number };
 Distance is the radius from the center/point, degree is the item offset around the parent, spacing will place the items the number of degrees away.
 ```
 const parent = document.getElementById('toSurround');
