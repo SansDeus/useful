@@ -1,9 +1,7 @@
 type coordinate = { x: number, y: number };
 type htmlCoordinate = HTMLElement | coordinate;
-type surroundOptions = { distance?: number, degree?: number, spacing?: number };
-/**
- * Ecliptic static class uses simple trig for circle calculation.
- */
+type surroundOptions = { distance?: number, degree?: number, spacing?: number, amplitudeX?: number, amplitudeY?: number };
+
 export class Ecliptic {
 	private static tau = Math.PI * 2;
 	private static deg2Rad = Ecliptic.tau / 360;
@@ -29,12 +27,11 @@ export class Ecliptic {
 	}
 
 	private static surroundDefaults = (options: surroundOptions) => {
-		let { distance, degree, spacing } = options;
+		let { distance, degree, spacing, amplitudeX, amplitudeY } = options;
 		const equal = typeof(spacing) === 'undefined' || spacing === 0;
-		distance ||= 0;
-		degree ||= 0;
-		spacing ||= 0;
-		return { distance, degree, spacing, equal };
+		distance ??= 0; degree ??= 0; spacing ??= 0;
+		amplitudeX ??= 1, amplitudeY ??= 1;
+		return { distance, degree, spacing, equal, amplitudeX, amplitudeY };
 	}
 
 	private static rcr = (item: htmlCoordinate, childCount: number, distance: number = 0) => {
@@ -66,15 +63,19 @@ export class Ecliptic {
 	}
 
 	static Surround = (item: htmlCoordinate, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions) => {
-		const { distance, degree, equal, spacing } = Ecliptic.surroundDefaults(options);
+		const { distance, degree, equal, spacing, amplitudeX, amplitudeY } = Ecliptic.surroundDefaults(options);
 		const { radians, center, radius } = Ecliptic.rcr(item, withItems.length, distance);
 		const separation = spacing * Ecliptic.deg2Rad;
+		const adjustCenter = (pc: number, c: number, ci: number, a: number) => ((c - ci) * a) + (pc * (1 - a));
 		let radian = degree * Ecliptic.deg2Rad;
 		if (withItems instanceof HTMLCollection) { withItems = Ecliptic.htmlCollectionToArray(withItems); }
 		withItems.forEach((e: HTMLElement, i: number): void => {
 			const coord = Ecliptic.LocationByRadian(center, radius, radian);
-			const b = e.getBoundingClientRect();
-			[e.style.left, e.style.top] = [`${coord.x - (b.width / 2)}px`, `${coord.y - (b.height / 2)}px`];
+			const centerItem = Ecliptic.itemCenter(e);
+			[e.style.left, e.style.top] = [
+				`${adjustCenter(center.x, coord.x, centerItem.x, amplitudeX)}px`,
+				`${adjustCenter(center.y, coord.y, centerItem.y, amplitudeY)}px`
+			];
 			radian += equal ? radians : separation;
 		});
 	}
