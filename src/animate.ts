@@ -1,23 +1,29 @@
-export const Animate = (action: (pct: number) => void, options?: { fps?: number, duration?: number, stop?: () => boolean, cb?: () => void }) => {
-	let { duration, fps, stop, cb } = options ? options : { duration: undefined, fps: undefined, stop: undefined, cb: undefined };
-	duration ||= 1000;
-	fps ||= 60;
+export const Animate = (
+	action: (pct: number) => void,
+	options?: { fps?: number, duration?: number, resumePct?: number, stop?: () => boolean, cb?: () => void }) => {
+	const { stop, cb } = options ? options : { stop: undefined, cb: undefined };
+	let { duration, fps, resumePct } = options ? options : { duration: undefined, fps: undefined, resumePct: undefined };
+	duration ??= 1000; fps ??= 60;
+	if (resumePct) {
+		duration *= resumePct;
+	}
 	const frameRate = duration / fps;
-	const start = Date.now();
+	const start = performance.now();
 	const endTime = start + duration;
 	const diff = endTime - start;
 	let frameCheck = start;
-	//Should be able to get pct and duration to calulate when to start again on the other side for pause functionality.
+
 	function AnimateFrame() {
 		if (stop && stop()) {
 			return;
 		}
-		const now = Date.now();
+		const now = performance.now();
 		const timePast = now - start;
 		const elapsed = now - frameCheck;
 		if (elapsed > frameRate) {
 			frameCheck = now - (elapsed % frameRate);
-			const pct = Math.max(0, Math.min(1, timePast / diff));
+			const pct = Math.max(0, Math.min(1, resumePct ?? (timePast / diff)));
+			if (resumePct) { resumePct = undefined };
 			action(pct);
 		}
 		if (now < endTime) {

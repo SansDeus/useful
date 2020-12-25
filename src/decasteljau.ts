@@ -1,16 +1,7 @@
 import { Lerp } from "./lerp";
-const Decasteljau = {
-	calculate (points: number[], percent: number): number {
-		let result : number[] = [points.length - 1];
-		for (let i = 0, j = points.length - 1; i < j; i++) {
-			result[i] = Lerp(points[i], points[i + 1], percent);
-		}
-		if (result.length === 1) {
-			const value = result[0];
-			result = [];
-			return value;
-		}
-		return this.calculate(result, percent);
-	}
-}
-export default Decasteljau;
+export const Decasteljau = (points: number[], percent: number): number => {
+	let result = points.map((n, i) => {
+		return i !== points.length ? Lerp(n as number, points[i + 1] as number, percent) : undefined;
+	}).filter(r => r) as number[];
+	return result.length === 1 ? result[0] : Decasteljau(result, percent);
+};

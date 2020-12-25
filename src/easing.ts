@@ -1,5 +1,5 @@
-import {Bezier} from "./bezier";
-import {RandomItem} from "./randomItem";
+import { Bezier } from "./bezier";
+import { RandomItem } from "./randomItem";
 
 export class Easing {
 	public static linear = Bezier([0.0, 0.0, 1.0, 1.0]);

@@ -51,10 +51,10 @@ const points = [
 Curves(points, .4);
 ```
 ## Decasteljau
-*Decasteljau.calculate*(points: number[], percent: number) 
+*Decasteljau*(points: number[], percent: number) 
 ```
 import {Decasteljau} from 'ts-useful';
-Decasteljau.calculate([1,2,3,4,5,6,7,10], .22);
+Decasteljau([1,2,3,4,5,6,7,10], .22);
 ```
 ## Easing
 Static easing functions.\
