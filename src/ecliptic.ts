@@ -27,9 +27,10 @@ export class Ecliptic {
 	}
 
 	private static surroundDefaults = (options: surroundOptions) => {
-		let { distance, degree, spacing, amplitudeX, amplitudeY } = options;
-		const equal = typeof(spacing) === 'undefined' || spacing === 0;
-		distance ??= 0; degree ??= 0; spacing ??= 0;
+		let { distance, degree, amplitudeX, amplitudeY } = options;
+		const { spacing } = options;
+		const equal = typeof(spacing) === 'undefined';
+		distance ??= 0; degree ??= 0;
 		amplitudeX ??= 1, amplitudeY ??= 1;
 		return { distance, degree, spacing, equal, amplitudeX, amplitudeY };
 	}
@@ -65,7 +66,7 @@ export class Ecliptic {
 	static Surround = (item: htmlCoordinate, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions) => {
 		const { distance, degree, equal, spacing, amplitudeX, amplitudeY } = Ecliptic.surroundDefaults(options);
 		const { radians, center, radius } = Ecliptic.rcr(item, withItems.length, distance);
-		const separation = spacing * Ecliptic.deg2Rad;
+		const separation = (spacing ?? 0) * Ecliptic.deg2Rad;
 		const adjustCenter = (pc: number, c: number, ci: number, a: number) => ((c - ci) * a) + (pc * (1 - a));
 		let radian = degree * Ecliptic.deg2Rad;
 		if (withItems instanceof HTMLCollection) { withItems = Ecliptic.htmlCollectionToArray(withItems); }

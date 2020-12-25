@@ -141,8 +141,8 @@ Sorter(array, 'bar');
 ```
 import {Swipe} from 'ts-useful';
 const swipe = new Swipe(element: HTMLElement, events?: ISwipeEvents);
-swipe.(events: ISwipeEvents)
-swipe.Destroy()
+swipe.(events: ISwipeEvents);
+swipe.Destroy();
  
 ISwipeEvents {
   left?: () => void;
