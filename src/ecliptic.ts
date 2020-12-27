@@ -3,19 +3,28 @@ type htmlCoordinate = HTMLElement | coordinate;
 type surroundOptions = { distance?: number, degree?: number, spacing?: number, amplitudeX?: number, amplitudeY?: number };
 
 export class Ecliptic {
+	private static deadXY = { x: 0, y: 0 };
 	private static tau = Math.PI * 2;
 	private static deg2Rad = Ecliptic.tau / 360;
 	static EqualRadians = (count: number) => Ecliptic.tau / count;
 	static EqualDegrees = (count: number) => 360 / count;
 
+	public static TransformCoordinates = (elm: HTMLElement) => {
+		const coordRx = /([\d\.]+)/g;
+		const result = elm.style.transform.match(coordRx);
+		return result ? { x: +result[0], y: +result[1] } : Ecliptic.deadXY;
+	}
+
 	private static itemCenter = (item: htmlCoordinate) => {
 		if (!(item instanceof HTMLElement)) { return item; }
+		if (item.style.transform) { return Ecliptic.deadXY; }
 		const bounds = item.getBoundingClientRect();
 		return { x: (bounds.width / 2), y: (bounds.height / 2) };
 	}
 
 	private static itemLocation = (item: htmlCoordinate) => {
 		if (!(item instanceof HTMLElement)) { return item; }
+		if (item.style.transform) { return Ecliptic.TransformCoordinates(item); }
 		const bounds = item.getBoundingClientRect();
 		return { x: bounds.left, y: bounds.top };
 	}
@@ -58,25 +67,20 @@ export class Ecliptic {
 	}
 
 	static LocationByDegree = (center: htmlCoordinate, radius: number, degree: number) => {
-		center = (center instanceof HTMLElement) ? Ecliptic.itemLocation(center) : center;
 		const radian = degree * Ecliptic.deg2Rad;
 		return Ecliptic.LocationByRadian(center, radius, radian);
 	}
 
 	static Surround = (item: htmlCoordinate, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions) => {
+		const toPx = (val: number) => `${Math.floor(val)}px`;
 		const { distance, degree, equal, spacing, amplitudeX, amplitudeY } = Ecliptic.surroundDefaults(options);
 		const { radians, center, radius } = Ecliptic.rcr(item, withItems.length, distance);
 		const separation = (spacing ?? 0) * Ecliptic.deg2Rad;
-		const adjustCenter = (pc: number, c: number, ci: number, a: number) => ((c - ci) * a) + (pc * (1 - a));
 		let radian = degree * Ecliptic.deg2Rad;
 		if (withItems instanceof HTMLCollection) { withItems = Ecliptic.htmlCollectionToArray(withItems); }
 		withItems.forEach((e: HTMLElement, i: number): void => {
-			const coord = Ecliptic.LocationByRadian(center, radius, radian);
-			const centerItem = Ecliptic.itemCenter(e);
-			[e.style.left, e.style.top] = [
-				`${adjustCenter(center.x, coord.x, centerItem.x, amplitudeX)}px`,
-				`${adjustCenter(center.y, coord.y, centerItem.y, amplitudeY)}px`
-			];
+			const {x, y} = Ecliptic.LocationByRadian(center, radius, radian);
+			e.style.transform = `translate(${toPx(x * amplitudeX)}, ${toPx(y * amplitudeY)})`;
 			radian += equal ? radians : separation;
 		});
 	}

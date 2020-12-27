@@ -76,10 +76,9 @@ easing(.03);
 
 ## Ecliptic
 Class to allow placing items at coordinates based on an HTMLElement or coordinate { x: number, y: number }\
-For the surround function place any surrounding items as children of the original item and give them a css position: absolute;\
-distance: Radius from the center/point.\
-degree: Starting degree.\
-spacing: Places the items the number of degrees away.
+This function uses transform for performance as it will not cause a repaint of the screen.\
+For best results give the parent HTMLElement this style - transform-origin: 50% 50%;\
+Give the child HTMLElements these styles - transform-origin: 50% 50%; top: 50%; left: 50%; position: absolute;
 ```
 Ecliptic.Surround(item: htmlCoordinate, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions);
 Ecliptic.LocationByDegree(center: htmlCoordinate, radius: number, degree: number);
