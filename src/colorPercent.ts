@@ -37,7 +37,7 @@ export class ColorPercent {
 			if(startColor && endColor) return Math.floor(Lerp(startColor[position], endColor[position], stepInfo.percent));
 			throw new Error(`getColor: Invalid color start: ${startColor} end: ${endColor}`);
 		};
-		const colorDecToHex = (r: number, g: number, b: number) => `#${(1 << 24 | (r << 16) | (g << 8) | (b << 0)).toString(16).substring(1)}`;
+		const colorDecToHex = (r: number, g: number, b: number) => `#${(1 << 24 | (r << 16) | (g << 8) | (b << 0)).toString(16).slice(1)}`;
 		return colorDecToHex(color(0), color(1), color(2));
 	}
 }

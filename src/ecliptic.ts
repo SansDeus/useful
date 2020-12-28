@@ -1,3 +1,5 @@
+import { ClampAngle } from "./clampAngle";
+
 type coordinate = { x: number, y: number };
 type htmlCoordinate = HTMLElement | coordinate;
 type surroundOptions = { distance?: number, degree?: number, spacing?: number, amplitudeX?: number, amplitudeY?: number };
@@ -67,7 +69,7 @@ export class Ecliptic {
 	}
 
 	static LocationByDegree = (center: htmlCoordinate, radius: number, degree: number) => {
-		const radian = degree * Ecliptic.deg2Rad;
+		const radian = ClampAngle(degree, -360, 360) * Ecliptic.deg2Rad;
 		return Ecliptic.LocationByRadian(center, radius, radian);
 	}
 
@@ -76,7 +78,7 @@ export class Ecliptic {
 		const { distance, degree, equal, spacing, amplitudeX, amplitudeY } = Ecliptic.surroundDefaults(options);
 		const { radians, center, radius } = Ecliptic.rcr(item, withItems.length, distance);
 		const separation = (spacing ?? 0) * Ecliptic.deg2Rad;
-		let radian = degree * Ecliptic.deg2Rad;
+		let radian = ClampAngle(degree, -360, 360) * Ecliptic.deg2Rad;
 		if (withItems instanceof HTMLCollection) { withItems = Ecliptic.htmlCollectionToArray(withItems); }
 		withItems.forEach((e: HTMLElement, i: number): void => {
 			const {x, y} = Ecliptic.LocationByRadian(center, radius, radian);
