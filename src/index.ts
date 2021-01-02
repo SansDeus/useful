@@ -9,6 +9,8 @@ export * from "./decasteljau";
 export * from "./easing";
 export * from './ecliptic';
 export * from "./lerp";
+export * from "./mobiusIndex";
+export * from "./randomColor";
 export * from "./randomrange";
 export * from "./randomItem";
 export * from "./smoothscroll";

@@ -80,8 +80,22 @@ This function uses transform for performance as it will not cause a repaint of t
 For best results give the parent HTMLElement this style - transform-origin: 50% 50%;\
 Give the child HTMLElements these styles - transform-origin: 50% 50%; top: 50%; left: 50%; position: absolute;
 ```
-Ecliptic.Surround(item: htmlCoordinate, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions);
+Ecliptic.Degree(origin: coordinates, target: coordinates);
+Ecliptic.Radian(origin: coordinates, target: coordinates);
+
+Ecliptic.EqualRadians(count: number);
+Ecliptic.EqualDegrees(count: number);
+
 Ecliptic.LocationByDegree(center: htmlCoordinate, radius: number, degree: number);
+Ecliptic.LocationByRadian(center: htmlCoordinate, radius: number, radian: number);
+
+Ecliptic.ToDegree(radian: number);
+Ecliptic.ToRadian(degree: number);
+
+Ecliptic.TransformCoordinates(elm: HTMLElement);
+
+Ecliptic.Surround(item: coordinate, amount: number, options: surroundOptions);
+Ecliptic.SurroundHTML(item: htmlCoordinate, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions);
 
 type coordinate = { x: number, y: number };
 type htmlCoordinate = HTMLElement | coordinate;
@@ -93,7 +107,7 @@ import {Ecliptic} from 'ts-useful';
 
 const parent = document.getElementById('toSurround');
 const kids = document.getElementsByClassName('childItems');
-Ecliptic.Surround(parent, kids, { degree: 90, distance: 120 });
+Ecliptic.SurroundHTML(parent, kids, { degree: 90, distance: 120 });
 Ecliptic.LocationByDegree(parent, 100, 180);
 ```
 ## Lerp
@@ -101,6 +115,19 @@ Ecliptic.LocationByDegree(parent, 100, 180);
 ```
 import {Lerp} from 'ts-useful';
 Lerp(-600, 600, .5);
+```
+## MobiusIndex
+MobiusIndex(length: number, index: number)\
+If index is negative, it will return the last item and beyond.\
+If index is greater than length, it will wrap to the first item and beyond.
+```
+import {MobiusIndex} from 'ts-useful';
+MobiusIndex(3, 0); // Output: 0;
+MobiusIndex(3, 1); // Output: 1;
+MobiusIndex(3, 2); // Output: 2;
+MobiusIndex(3, 3); // Output: 0;
+MobiusIndex(3, 4); // Output: 1;
+MobiusIndex(3, -1); // Output: 2;
 ```
 ## RandomRange
 *RandomRange*(min: number, max: number)

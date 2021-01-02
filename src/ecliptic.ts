@@ -10,28 +10,30 @@ export class Ecliptic {
 	private static deg2Rad = Ecliptic.tau / 360;
 	static EqualRadians = (count: number) => Ecliptic.tau / count;
 	static EqualDegrees = (count: number) => 360 / count;
+	static ToDegree = (radian: number) => (radian >= 0 ? radian : (Ecliptic.tau + radian)) * 360 / Ecliptic.tau;
+	static ToRadian = (degree: number) => degree * Ecliptic.deg2Rad;
 
-	public static TransformCoordinates = (elm: HTMLElement) => {
+	public static TransformCoordinates = (elm: HTMLElement): coordinate => {
 		const coordRx = /([\d\.]+)/g;
 		const result = elm.style.transform.match(coordRx);
 		return result ? { x: +result[0], y: +result[1] } : Ecliptic.deadXY;
 	}
 
-	private static itemCenter = (item: htmlCoordinate) => {
+	private static itemCenter = (item: htmlCoordinate): coordinate => {
 		if (!(item instanceof HTMLElement)) { return item; }
 		if (item.style.transform) { return Ecliptic.deadXY; }
 		const bounds = item.getBoundingClientRect();
 		return { x: (bounds.width / 2), y: (bounds.height / 2) };
 	}
 
-	private static itemLocation = (item: htmlCoordinate) => {
+	private static itemLocation = (item: htmlCoordinate): coordinate => {
 		if (!(item instanceof HTMLElement)) { return item; }
 		if (item.style.transform) { return Ecliptic.TransformCoordinates(item); }
 		const bounds = item.getBoundingClientRect();
 		return { x: bounds.left, y: bounds.top };
 	}
 
-	private static calcRadius = (item: htmlCoordinate, distance: number = 0) => {
+	private static calcRadius = (item: htmlCoordinate, distance: number = 0): number => {
 		if (!(item instanceof HTMLElement)) { return distance; }
 		const bounds = item.getBoundingClientRect();
 		return distance === 0 ? Math.max(bounds.width, bounds.height) : distance;
@@ -60,6 +62,15 @@ export class Ecliptic {
 		});
 	}
 
+	static Radian = (origin: coordinate, target: coordinate) => {
+		const [dx, dy] = [origin.x - target.x, origin.y - target.y];
+		return Math.atan2(dy, dx);
+	}
+
+	static Degree = (origin: coordinate, target: coordinate) => {
+		return Ecliptic.ToDegree(Ecliptic.Radian(origin, target));
+	}
+
 	static LocationByRadian = (center: htmlCoordinate, radius: number, radian: number) => {
 		center = (center instanceof HTMLElement) ? Ecliptic.itemLocation(center) : center;
 		return {
@@ -69,21 +80,28 @@ export class Ecliptic {
 	}
 
 	static LocationByDegree = (center: htmlCoordinate, radius: number, degree: number) => {
-		const radian = ClampAngle(degree, -360, 360) * Ecliptic.deg2Rad;
+		const radian = Ecliptic.ToRadian(ClampAngle(degree, -360, 360));
 		return Ecliptic.LocationByRadian(center, radius, radian);
 	}
 
-	static Surround = (item: htmlCoordinate, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions) => {
-		const toPx = (val: number) => `${Math.floor(val)}px`;
+	static Surround = (item: coordinate, amount: number, options: surroundOptions): coordinate[] => {
 		const { distance, degree, equal, spacing, amplitudeX, amplitudeY } = Ecliptic.surroundDefaults(options);
-		const { radians, center, radius } = Ecliptic.rcr(item, withItems.length, distance);
-		const separation = (spacing ?? 0) * Ecliptic.deg2Rad;
-		let radian = ClampAngle(degree, -360, 360) * Ecliptic.deg2Rad;
-		if (withItems instanceof HTMLCollection) { withItems = Ecliptic.htmlCollectionToArray(withItems); }
-		withItems.forEach((e: HTMLElement, i: number): void => {
+		const { radians, center, radius } = Ecliptic.rcr(item, amount, distance);
+		const separation = Ecliptic.ToRadian(spacing ?? 0);
+		let radian = Ecliptic.ToRadian(ClampAngle(degree, -360, 360));
+		const results = Array.apply(null, new Array(amount)).map((o: unknown, i: number) => {
 			const {x, y} = Ecliptic.LocationByRadian(center, radius, radian);
-			e.style.transform = `translate(${toPx(x * amplitudeX)}, ${toPx(y * amplitudeY)})`;
 			radian += equal ? radians : separation;
+			return {x: x * amplitudeX, y: y * amplitudeY};
+		});
+		return results;
+	}
+
+	static SurroundHTML = (item: HTMLElement, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions) => {
+		const toPx = (val: number) => `${Math.floor(val)}px`;
+		if (withItems instanceof HTMLCollection) { withItems = Ecliptic.htmlCollectionToArray(withItems); }
+		Ecliptic.Surround(Ecliptic.itemCenter(item), withItems.length, options).forEach((c, i) => {
+			(withItems[i] as HTMLElement).style.transform = `translate(${toPx(c.x)}, ${toPx(c.y)})`;
 		});
 	}
 }
