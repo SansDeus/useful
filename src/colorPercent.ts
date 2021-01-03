@@ -20,10 +20,8 @@ export class ColorPercent {
 
 	private static getRgb = (color: string) : number[] =>
 	{
-		if(typeof color === "string") {
-			const rxc = ColorPercent.regexArray.find((rx: rxCompare) => rx.regex.test(color));
-			if(rxc) return rxc.converter(rxc.regex.exec(color));
-		}
+		const rxc = ColorPercent.regexArray.find((rx: rxCompare) => rx.regex.test(color));
+		if(rxc) return rxc.converter(rxc.regex.exec(color));
 		throw new Error('getRgb: Invalid color.');
 	}
                                                    

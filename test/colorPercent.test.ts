@@ -21,6 +21,6 @@ describe('ColorPercent.getColor', () => {
 	it('should error with bad format', () => {
 		t.doesNotThrow(() => {ColorPercent.getColor(["rgb(127, 127, 127)", "rgb(50%, 50%, 50%)"], .2)});
 		t.doesNotThrow(() => {ColorPercent.getColor(["rgb(127, 127, 127)", "rgb(50%, 50%, 50%)"], .8)});
-		t.throws(() => { ColorPercent.getColor(["rgb(127, 127, 127)", "rgb(50%, 50%, 50%)", "#FFF", "walrus"], .9) });
+		t.throws(() => { ColorPercent.getColor(["#FFF", "walrus"], .9) });
 	});
 });
