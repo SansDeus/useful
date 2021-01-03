@@ -1,17 +1,39 @@
 {
 	"name": "ts-useful",
-	"version": "1.1.5",
+	"version": "1.1.6",
 	"description": "Functions for animation, color transitions, ecliptic, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, random range, randomItem, mobius index, and easing.",
 	"main": "./lib/index.js",
 	"private": false,
+	"type": "module",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/SansDeus/useful.git"
 	},
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"clean": "del-cli lib/**",
 		"compile": "tsc",
-		"prepare": "npm run compile"
+		"setup": "npm i -D @types/chai @types/mocha chai del-cli esm jsdom jsdom-global mocha nyc sinon",
+		"test": "nyc mocha -r ts-node/register -r esm -r jsdom-global/register test/**/*.test.ts",
+		"prepare": "npm run clean && npm run compile && npm run test",
+		"install": "npm run setup && npm run prepare",
+		"remove": "npm uninstall -D @types/chai @types/mocha chai del-cli esm jsdom jsdom-global mocha nyc sinon"
+	},
+	"nyc": {
+		"extension": [
+			".ts",
+			".tsx"
+		],
+		"exclude": [
+			"**/*.d.ts",
+			"coverage",
+			"lib/*",
+			"src/extensions",
+			"test"
+		],
+		"reporter": [
+			"html"
+		],
+		"all": true
 	},
 	"keywords": [
 		"Animate",
@@ -42,5 +64,6 @@
 	"devDependencies": {
 		"ts-node": "^9.0.0",
 		"typescript": "^4.1.2"
-	}
+	},
+	"dependencies": {}
 }

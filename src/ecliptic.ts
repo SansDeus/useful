@@ -33,7 +33,7 @@ export class Ecliptic {
 		return { x: bounds.left, y: bounds.top };
 	}
 
-	private static calcRadius = (item: htmlCoordinate, distance: number = 0): number => {
+	private static calcRadius = (item: htmlCoordinate, distance: number): number => {
 		if (!(item instanceof HTMLElement)) { return distance; }
 		const bounds = item.getBoundingClientRect();
 		return distance === 0 ? Math.max(bounds.width, bounds.height) : distance;
@@ -48,7 +48,7 @@ export class Ecliptic {
 		return { distance, degree, spacing, equal, amplitudeX, amplitudeY };
 	}
 
-	private static rcr = (item: htmlCoordinate, childCount: number, distance: number = 0) => {
+	private static rcr = (item: htmlCoordinate, childCount: number, distance: number) => {
 		return {
 			radians: Ecliptic.EqualRadians(childCount),
 			center: Ecliptic.itemCenter(item),

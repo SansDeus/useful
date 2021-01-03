@@ -18,11 +18,8 @@ export class ColorPercent {
 			converter: (e: RegExpExecArray) => [parseFloat(e[1]) * 2.55, parseFloat(e[2]) * 2.55, parseFloat(e[3]) * 2.55] }
 	];
 
-	private static getRgb = (color: string | number[]) : number[] =>
+	private static getRgb = (color: string) : number[] =>
 	{
-		if (color && Array.isArray(color) && color.length === 3) {
-			return color;
-		}
 		if(typeof color === "string") {
 			const rxc = ColorPercent.regexArray.find((rx: rxCompare) => rx.regex.test(color));
 			if(rxc) return rxc.converter(rxc.regex.exec(color));
@@ -34,8 +31,7 @@ export class ColorPercent {
 		const stepInfo = colorList.calculateStep(percent);
 		const color = (position: number) => {
 			const [startColor, endColor] = [ColorPercent.getRgb(stepInfo.current), ColorPercent.getRgb(stepInfo.next)];
-			if(startColor && endColor) return Math.floor(Lerp(startColor[position], endColor[position], stepInfo.percent));
-			throw new Error(`getColor: Invalid color start: ${startColor} end: ${endColor}`);
+			return Math.floor(Lerp(startColor[position], endColor[position], stepInfo.percent));
 		};
 		const colorDecToHex = (r: number, g: number, b: number) => `#${(1 << 24 | (r << 16) | (g << 8) | (b << 0)).toString(16).slice(1)}`;
 		return colorDecToHex(color(0), color(1), color(2));

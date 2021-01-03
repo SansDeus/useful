@@ -57,7 +57,7 @@ import {Decasteljau} from 'ts-useful';
 Decasteljau([1,2,3,4,5,6,7,10], .22);
 ```
 ## Easing
-Static easing functions.\
+Static easing functions.
 ```
 import {Easing} from 'ts-useful';
 const easing = Easing.linear;
@@ -182,4 +182,11 @@ ISwipeEvents {
 ```
 import {ThreeD} from 'ts-useful';
 const locations = ThreeD([{ x: 0, y: 0, z: 0}, { x: 10, y: 10, z: 10}], .5);
+```
+## Testing
+Command to install dependencies and run tests, and a command to remove the dependencies afterwards.\
+*Before* running install, update the "module" value to "commonjs" in the tsconfig.json file. 
+```
+npm run install
+npm run remove
 ```
