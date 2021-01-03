@@ -184,9 +184,7 @@ import {ThreeD} from 'ts-useful';
 const locations = ThreeD([{ x: 0, y: 0, z: 0}, { x: 10, y: 10, z: 10}], .5);
 ```
 ## Testing
-Command to install dependencies and run tests, and a command to remove the dependencies afterwards.\
-*Before* running install, update the "module" value to "commonjs" in the tsconfig.json file. 
+Command to install dependencies, run tests, and clean up after itself.
 ```
-npm run install
-npm run remove
+npm run test
 ```

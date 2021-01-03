@@ -1,6 +1,6 @@
 {
 	"name": "ts-useful",
-	"version": "1.1.6",
+	"version": "1.1.7",
 	"description": "Functions for animation, color transitions, ecliptic, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, random range, randomItem, mobius index, and easing.",
 	"main": "./lib/index.js",
 	"private": false,
@@ -11,12 +11,13 @@
 	},
 	"scripts": {
 		"clean": "del-cli lib/**",
+		"getclean": "npm i -D del-cli",
 		"compile": "tsc",
-		"setup": "npm i -D @types/chai @types/mocha chai del-cli esm jsdom jsdom-global mocha nyc sinon",
-		"test": "nyc mocha -r ts-node/register -r esm -r jsdom-global/register test/**/*.test.ts",
-		"prepare": "npm run clean && npm run compile && npm run test",
-		"install": "npm run setup && npm run prepare",
-		"remove": "npm uninstall -D @types/chai @types/mocha chai del-cli esm jsdom jsdom-global mocha nyc sinon"
+		"remove": "npm uninstall -D @types/chai @types/mocha chai del-cli esm jsdom jsdom-global mocha nyc sinon",
+		"exectest": "set TS_NODE_PROJECT=tsconfig.commonjs.json&& nyc mocha -r ts-node/register -r esm -r jsdom-global/register test/**/*.test.ts",
+		"setup": "npm i -D @types/chai @types/mocha chai esm jsdom jsdom-global mocha nyc sinon",
+		"test": "npm run setup && npm run exectest && npm run remove",
+		"prepare": "npm run getclean && npm run clean && npm run compile && npm run test"
 	},
 	"nyc": {
 		"extension": [
