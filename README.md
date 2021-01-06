@@ -21,6 +21,17 @@ import {Bezier} from 'ts-useful';
 bezier = Bezier([0.0, 0.0, 1.0, 1.0]);
 bezier(.2);
 ```
+## Boids
+*Boids*(options?: boidOptions);\
+Method: Update() => coordinates[];
+```
+import {Boids} from 'ts-useful';
+const boids = new Boids({ boids: 2 });
+or
+const boids = new Boids({ boids: [{ position: {x: 10, y: 10}, speed: { x: 0, y: 0 }, acceleration: { x: 0, y: 0 } }] });
+
+boids.Update();
+```
 ## Clamp, ClampAngle, ClampRadian
 These functions will make sure a number stays between the min and max values.\
 *Clamp*(amount: number, min: number, max: number);\

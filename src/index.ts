@@ -1,5 +1,6 @@
 export * from "./animate";
 export * from "./bezier";
+export * from './boids';
 export * from './clamp';
 export * from './clampAngle';
 export * from './clampRadian';

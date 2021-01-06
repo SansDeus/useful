@@ -1,6 +1,6 @@
 import { ClampAngle } from "./clampAngle";
+import { coordinate } from "./types/coordinate";
 
-type coordinate = { x: number, y: number };
 type htmlCoordinate = HTMLElement | coordinate;
 type surroundOptions = { distance?: number, degree?: number, spacing?: number, amplitudeX?: number, amplitudeY?: number };
 
