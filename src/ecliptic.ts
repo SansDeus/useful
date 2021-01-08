@@ -1,5 +1,5 @@
 import { ClampAngle } from "./clampAngle";
-import { coordinate } from "./types/coordinate";
+import { coordinate } from "./interfaces/coordinate";
 
 type htmlCoordinate = HTMLElement | coordinate;
 type surroundOptions = { distance?: number, degree?: number, spacing?: number, amplitudeX?: number, amplitudeY?: number };

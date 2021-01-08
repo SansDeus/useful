@@ -18,3 +18,5 @@ export * from "./smoothscroll";
 export * from "./sorter";
 export * from "./swipe";
 export * from "./threeD";
+export * from "./types";
+export * from "./interfaces";

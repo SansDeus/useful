@@ -1,5 +1,6 @@
 import { Decasteljau } from './decasteljau';
-export const ThreeD = (points: { x: number, y: number, z: number }[], percent: number) => {
+import { coordinate3d } from './interfaces/coordinate';
+export const ThreeD = (points: coordinate3d[], percent: number) => {
 	return { 
 		x: Decasteljau(points.map((p) => p.x), percent),
 		y: Decasteljau(points.map((p) => p.y), percent),

@@ -1,9 +1,7 @@
 import { attractor } from './attractor';
-import { boid } from './boid';
 
 export type boidOptions = {
-	speedLimitRoot?: number;
-	accelerationLimitRoot?: number;
+	boids: number;
 	speedLimit?: number;
 	accelerationLimit?: number;
 	separationDistance?: number;
@@ -14,5 +12,4 @@ export type boidOptions = {
 	alignmentForce?: number;
 	alignment?: number;
 	attractors?: attractor[];
-	boids?: number | boid[];
 }

@@ -1,2 +1,3 @@
-import { coordinate } from './coordinate';
-export type attractor = { position: coordinate, distance: number, speed: number };
+import { coordinate } from '../interfaces/coordinate';
+export type attractorPartial = { position: coordinate, radius?: number, force?: number };
+export type attractor = { position: coordinate, radius: number, force: number };
