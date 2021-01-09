@@ -28,7 +28,8 @@ export class Boids {
 		return x + 3 * n / 32 + Math.max(0, 2 * n - x) / 8 + Math.max(0, 4 * n - x) / 16;
 	}
 	private hypotCoord = (coord: coordinate) => this.hypot(coord.x, coord.y);
-	private dSqr = (p: coordinate) => Math.sqrt(p.x) + Math.sqrt(p.y);
+	private sqr = (n: number) => n * n;
+	private dSqr = (p: coordinate) => this.sqr(p.x) + this.sqr(p.y);
 	private ap = (p1: coordinate, p2: coordinate): coordinate => { return { x: p1.x + p2.x, y: p1.y + p2.y }; };
 	private sp = (p1: coordinate, p2: coordinate): coordinate => { return { x: p1.x - p2.x, y: p1.y - p2.y }; };
 	private mp = (p: coordinate, m: number): coordinate => { return { x: p.x * m, y: p.y * m }; };
