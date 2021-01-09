@@ -13,9 +13,9 @@
 		"clean": "del-cli lib/**",
 		"getclean": "npm i -D del-cli",
 		"compile": "tsc",
-		"remove": "npm uninstall -D @types/chai @types/mocha chai del-cli esm jsdom jsdom-global mocha nyc sinon",
+		"remove": "npm uninstall -D @types/chai @types/mocha @types/sinon @types/node chai esm jsdom jsdom-global mocha nyc sinon del-cli",
 		"exectest": "set TS_NODE_PROJECT=tsconfig.commonjs.json&& nyc mocha -r ts-node/register -r esm -r jsdom-global/register test/**/*.test.ts",
-		"setup": "npm i -D @types/chai @types/mocha chai esm jsdom jsdom-global mocha nyc sinon",
+		"setup": "npm i -D @types/chai @types/mocha @types/sinon @types/node chai esm jsdom jsdom-global mocha nyc sinon",
 		"test": "npm run setup && npm run exectest && npm run remove",
 		"prepare": "npm run getclean && npm run clean && npm run compile && npm run test"
 	},
