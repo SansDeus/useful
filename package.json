@@ -1,7 +1,7 @@
 {
 	"name": "ts-useful",
-	"version": "1.1.10",
-	"description": "Functions for animation, color transitions, ecliptic, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, random range, randomItem, mobius index, and easing.",
+	"version": "1.1.11",
+	"description": "Functions for animation, color transitions, ecliptic, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, random range, randomItem, mobius index, vectors, gravity vectors, and easing.",
 	"main": "./lib/index.js",
 	"private": false,
 	"type": "module",
@@ -41,6 +41,7 @@
 	"keywords": [
 		"Animate",
 		"Bezier",
+		"Boids",
 		"Clamp",
 		"Clamp angle",
 		"Clamp radian",
@@ -60,6 +61,8 @@
 		"Swipe",
 		"Fake 3D",
 		"Library",
+		"Vectors",
+		"Gravitational attraction",
 		"Utilities"
 	],
 	"author": "Aaron Edwards",

@@ -121,6 +121,21 @@ const kids = document.getElementsByClassName('childItems');
 Ecliptic.SurroundHTML(parent, kids, { degree: 90, distance: 120 });
 Ecliptic.LocationByDegree(parent, 100, 180);
 ```
+## GravityVector 
+*GravityVector*(options: { position: coordinate, gravity: number, mass: number, distanceClamp: { min: number, max: number } });\
+Extends Vector class.\
+*Methods*\
+attract(target: GravityVector);\
+applyForce(force: GravityVector);\
+update();\
+*Properties*: velocity: Vector, acceleration: Vector;
+```
+const gv1 = new GravityVector();
+const gv2 = new GravityVector({ position: { x: 50, y: 50 } });
+const force = gv1.attract(gv2);
+gv2.applyForce(f);
+gv2.update();
+```
 ## Lerp
 *Lerp*(start: number, end: number, percent: number)
 ```
@@ -193,6 +208,23 @@ ISwipeEvents {
 ```
 import {ThreeD} from 'ts-useful';
 const locations = ThreeD([{ x: 0, y: 0, z: 0}, { x: 10, y: 10, z: 10}], .5);
+```
+## Vector
+*Vector*(coordinate?: coordinate);\
+*Methods*:\
+add(coordinate: coordinate)\
+subtract(coordinate: coordinate)\
+multiply(amount: number)\
+divide(amount: number)\
+normalize()\
+set(coordinate: coordinate)\
+zero()\
+*Properties*: hypotenuse: number, magnitude: number;
+```
+import {Vector} from 'ts-useful';
+const vector = new Vector();
+vector.add({ x: 50, y: 50 }).multiply(2);
+
 ```
 ## Testing
 Command to install dependencies, run tests, and clean up after itself.
