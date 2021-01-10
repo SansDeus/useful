@@ -7,7 +7,7 @@ const coordinates = [
 	{ x: 0, y: 50 },
 	{ x: 50, y: 0 },
 	{ x: 0, y: -50 },
-	{ x: -50, y: 0 }
+	{ x: -50, y: -0 }
   ];
 
 describe('Ecliptic', () => {
