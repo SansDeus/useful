@@ -2,14 +2,13 @@ export const Animate = (
 	action: (pct: number) => void,
 	options?: { fps?: number, duration?: number, resumePct?: number, stop?: () => boolean, cb?: () => void }) => {
 	const { stop, cb } = options ? options : { stop: undefined, cb: undefined };
-	const nowFn = typeof(performance) !== 'undefined' ? performance.now : Date.now;
 	let { duration, fps, resumePct } = options ? options : { duration: undefined, fps: undefined, resumePct: undefined };
 	duration ??= 1000; fps ??= 60;
 	if (resumePct) {
 		duration *= resumePct;
 	}
 	const frameRate = duration / fps;
-	const start = nowFn();
+	const start = performance.now();
 	const endTime = start + duration;
 	const diff = endTime - start;
 	let frameCheck = start;
@@ -18,7 +17,7 @@ export const Animate = (
 		if (stop && stop()) {
 			return;
 		}
-		const now = nowFn();
+		const now = performance.now();
 		const timePast = now - start;
 		const elapsed = now - frameCheck;
 		if (elapsed > frameRate) {
