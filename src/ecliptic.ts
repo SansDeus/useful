@@ -2,7 +2,7 @@ import { ClampAngle } from "./clampAngle";
 import { coordinate } from "./interfaces/coordinate";
 
 type htmlCoordinate = HTMLElement | coordinate;
-type surroundOptions = { distance?: number, degree?: number, spacing?: number, amplitudeX?: number, amplitudeY?: number };
+type surroundOptions = { distance?: number, degree?: number, spacing?: number, amplitudeX?: number, amplitudeY?: number, html?: boolean };
 
 export class Ecliptic {
 	private static deadXY = { x: 0, y: 0 };
@@ -40,12 +40,11 @@ export class Ecliptic {
 	}
 
 	private static surroundDefaults = (options: surroundOptions) => {
-		let { distance, degree, amplitudeX, amplitudeY } = options;
+		let { distance, degree, amplitudeX, amplitudeY, html } = options;
 		const { spacing } = options;
 		const equal = typeof(spacing) === 'undefined';
 		distance ??= 0; degree ??= 0;
-		amplitudeX ??= 1, amplitudeY ??= 1;
-		return { distance, degree, spacing, equal, amplitudeX, amplitudeY };
+		return { distance, degree, spacing, equal, amplitudeX, amplitudeY, html };
 	}
 
 	private static rcr = (item: htmlCoordinate, childCount: number, distance: number) => {
@@ -85,19 +84,27 @@ export class Ecliptic {
 	}
 
 	static Surround = (item: coordinate, amount: number, options: surroundOptions): coordinate[] => {
-		const { distance, degree, equal, spacing, amplitudeX, amplitudeY } = Ecliptic.surroundDefaults(options);
+		const { distance, degree, equal, spacing, amplitudeX, amplitudeY, html } = Ecliptic.surroundDefaults(options);
 		const { radians, center, radius } = Ecliptic.rcr(item, amount, distance);
 		const separation = Ecliptic.ToRadian(spacing ?? 0);
+		const [hasAmpX, hasAmpY] = [typeof(amplitudeX) !== 'undefined', typeof(amplitudeY) !== 'undefined'];
+		const applyAmplitude = (amplitude: number, originPoint: number, destinationPoint: number) => {
+			return (destinationPoint * amplitude) + (html ? 0 : originPoint * amplitude);
+		}
 		let radian = Ecliptic.ToRadian(ClampAngle(degree, -360, 360));
 		const results = Array.apply(null, new Array(amount)).map((o: unknown, i: number) => {
 			const {x, y} = Ecliptic.LocationByRadian(center, radius, radian);
 			radian += equal ? radians : separation;
-			return {x: x * amplitudeX, y: y * amplitudeY};
+			return { 
+				x: hasAmpX ? applyAmplitude(amplitudeX as number, item.x, x) : (x === 0 ? 0 : x),
+				y: hasAmpY ? applyAmplitude(amplitudeY as number, item.y, y) : (y === 0 ? 0 : y)
+			};
 		});
 		return results;
 	}
 
 	static SurroundHTML = (item: HTMLElement, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions) => {
+		options.html = true;
 		const toPx = (val: number) => `${Math.floor(val)}px`;
 		if (withItems instanceof HTMLCollection) { withItems = Ecliptic.htmlCollectionToArray(withItems); }
 		Ecliptic.Surround(Ecliptic.itemCenter(item), withItems.length, options).forEach((c, i) => {

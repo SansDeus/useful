@@ -1,12 +1,13 @@
 import { assert as t } from 'chai';
 import 'mocha';
 import { Ecliptic } from '../src/ecliptic';
+import { Vector } from '../src';
 const dead = {x: 0, y: 0};
 const coordinates = [
 	{ x: 0, y: 50 },
 	{ x: 50, y: 0 },
 	{ x: 0, y: -50 },
-	{ x: -50, y: -0 }
+	{ x: -50, y: 0 }
   ];
 
 describe('Ecliptic', () => {
@@ -72,7 +73,16 @@ describe('Ecliptic', () => {
 
 	describe('Surround', () => {
 		it('should give 4 coordinates around the initial coordinate', () => {
+			const v = new Vector({ x: 20, y: 0 });
+			const dv = new Vector();
 			t.deepEqual(Ecliptic.Surround(dead, 4, { distance: 50 }), coordinates);
+			const ampExpect = [
+				{ x: 36, y: 100 },
+				{ x: 126, y: 0 },
+				{ x: 36, y: -100 },
+				{ x: -54, y: 0 }
+			  ];
+			t.deepEqual(Ecliptic.Surround(dv.add(v), 4, { distance: 100, amplitudeX: .9 }), ampExpect);
 			t.deepEqual(Ecliptic.Surround(dead, 4, { distance: 50, spacing: 15 }), [
 				{ x: 0, y: 50 },
 				{ x: 13, y: 48 },
