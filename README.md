@@ -83,7 +83,7 @@ import {Easing} from 'ts-useful';
 const easing = Easing.random();
 easing(.03);
 ```
-*Easing types include:* linear, sineIn, sineOut, sineInOut, quadIn, quadOut, quadInOut, cubicIn, cubicOut, cubicInOut, quartIn, quartOut, quartInOut, quintIn, quintOut, quintInOut, expoIn, expoOut, expoInOut, circIn, circOut, circInOut, backIn, backOut, backInOut, elasticIn, elasticOut, elasticInOut, random.
+*Easing types include:* linear, sineIn, sineOut, sineInOut, quadIn, quadOut, quadInOut, cubicIn, cubicOut, cubicInOut, quartIn, quartOut, quartInOut, quintIn, quintOut, quintInOut, expoIn, expoOut, expoInOut, circIn, circOut, circInOut, backIn, backOut, backInOut, boomerang, elasticIn, elasticOut, elasticInOut, bounceIn, bounceOut, bounceInOut, and random.
 
 ## Ecliptic
 Class to allow placing items at coordinates based on an HTMLElement or coordinate { x: number, y: number }\

@@ -27,6 +27,7 @@ export class Easing {
 	public static backIn = Bezier([0.6, -0.28, 0.735, 0.045]);
 	public static backOut = Bezier([0.175, 0.885, 0.32, 1.275]);
 	public static backInOut = Bezier([0.68, -0.55, 0.265, 1.55]);
+	public static boomerang = (t: number) => ((t >= .5) ? 1 - t : t) * 2;
 	public static elasticIn = (t: number) => (.04 - .04 / t) * Math.sin(25 * t) + 1;
 	public static elasticOut = (t: number) => .04 * t / (--t) * Math.sin(25 * t);
 	public static elasticInOut = (t: number) => (t -= .5) < 0 ? (.02 + .01 / t) * Math.sin(50 * t) : (0.02 - .01 / t) * Math.sin(50 * t) + 1;
@@ -44,7 +45,7 @@ export class Easing {
 		Easing.backIn,		Easing.backInOut,			Easing.backOut, 		Easing.bounceIn,	Easing.bounceInOut,	Easing.bounceOut,
 		Easing.circIn,		Easing.circInOut,			Easing.circOut,			Easing.cubicIn,		Easing.cubicInOut,	Easing.cubicOut,
 		Easing.elasticIn,	Easing.elasticInOut,	Easing.elasticOut,	Easing.expoIn,		Easing.expoInOut,		Easing.expoOut,
-		Easing.linear,
+		Easing.linear,		Easing.boomerang,
 		Easing.quadIn,		Easing.quadInOut,			Easing.quadOut,			Easing.quartIn,		Easing.quartInOut,	Easing.quartOut,
 		Easing.quintIn,		Easing.quintInOut,		Easing.quintOut,		Easing.sineIn,		Easing.sineInOut,		Easing.sineOut,
 	]) as ((t: number) => number);
