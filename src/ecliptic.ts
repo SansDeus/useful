@@ -1,5 +1,5 @@
 import { ClampAngle } from './clampAngle';
-import { coordinate } from './interfaces/coordinate';
+import { coordinate } from './types/coordinate';
 
 type htmlCoordinate = HTMLElement | coordinate;
 type surroundOptions = { distance?: number, degree?: number, spacing?: number, amplitudeX?: number, amplitudeY?: number };
@@ -39,7 +39,8 @@ export class Ecliptic {
 		return distance === 0 ? Math.max(bounds.width, bounds.height) : distance;
 	}
 
-	private static surroundDefaults = (options: surroundOptions) => {
+	private static surroundDefaults = (options?: surroundOptions) => {
+		options ??= {};
 		const { spacing, amplitudeX, amplitudeY } = options;
 		const equal = typeof(spacing) === 'undefined';
 		let { distance, degree } = options;
@@ -83,7 +84,7 @@ export class Ecliptic {
 		return Ecliptic.LocationByRadian(center, radius, radian);
 	}
 
-	static Surround = (item: coordinate, amount: number, options: surroundOptions): coordinate[] => {
+	static Surround = (item: coordinate, amount: number, options?: surroundOptions): coordinate[] => {
 		const { distance, degree, equal, spacing, amplitudeX, amplitudeY } = Ecliptic.surroundDefaults(options);
 		const { radians, center, radius } = Ecliptic.rcr(item, amount, distance);
 		const separation = Ecliptic.ToRadian(spacing ?? 0);

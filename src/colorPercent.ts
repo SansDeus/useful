@@ -1,4 +1,4 @@
-import "./extensions/calculateStep"; 
+import './extensions/calculateStep'; 
 import { Lerp } from './lerp';
 
 type rxCompare = { regex: RegExp, converter: (e: any) => number[] };

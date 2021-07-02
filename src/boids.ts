@@ -1,6 +1,6 @@
 // Updated to use typescript.
 // Original repository is here: https://github.com/hughsk/boids
-import { coordinate } from './interfaces/coordinate';
+import { coordinate } from './types/coordinate';
 import { RandomRange } from './randomrange';
 import { boid, attractor, attractorPartial, boidInternal, boidOptions } from './types';
 

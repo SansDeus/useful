@@ -121,7 +121,7 @@ const kids = document.getElementsByClassName('childItems');
 Ecliptic.SurroundHTML(parent, kids, { degree: 90, distance: 120 });
 Ecliptic.LocationByDegree(parent, 100, 180);
 ```
-## GravityVector 
+## GravityVector (depricated. Use PhysicsVector)
 *GravityVector*(options: { position: coordinate, gravity: number, mass: number, distanceClamp: { min: number, max: number } });\
 Extends Vector class.\
 *Methods*\

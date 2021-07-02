@@ -1,5 +1,5 @@
-import { Animate } from "./animate";
-import { Easing } from "./easing";
+import { Animate } from './animate';
+import { Easing } from './easing';
 
 export interface IScrollOptions {
 	offsetY?: number;
