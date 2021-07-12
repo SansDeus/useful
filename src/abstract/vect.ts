@@ -2,9 +2,7 @@ import {coordinate} from '../types';
 import {IVector} from '../interfaces/IVector';
 import {Coordinate} from './coordinate';
 
-export abstract class Vect implements IVector {
-	x: number;
-	y: number;
+export abstract class Vect extends Coordinate implements IVector {
 	acceleration?: IVector;
 	velocity?: IVector;
 
@@ -43,59 +41,6 @@ export abstract class Vect implements IVector {
 		return Math.sqrt(Vect.distanceSquare(vector));
 	}
 
-	set = (coordinate: coordinate) => {
-		[this.x, this.y] = [coordinate.x, coordinate.y];
-		return this;
-	}
-
-	add = (coordinate: coordinate) => {
-		this.set(Coordinate.add(this, coordinate));
-		return this;
-	}
-
-	addAcross = (amount: number) => {
-		this.set(Coordinate.addAcross(this, amount));
-		return this;
-	}
-
-	subtract = (coordinate: coordinate) => {
-		this.set(Coordinate.subtract(this, coordinate));
-		return this;
-	}
-
-	subtractAcross = (amount: number) => {
-		this.set(Coordinate.subtractAcross(this, amount));
-		return this;
-	}
-
-	multiply = (coordinate: coordinate) => {
-		this.set(Coordinate.multiply(this, coordinate));
-		return this;
-	}
-
-	multiplyAcross = (amount: number) => {
-		this.set(Coordinate.multiplyAcross(this, amount));
-		return this;
-	}
-
-	divide = (coordinate: coordinate) => {
-		this.set(Coordinate.divide(this, coordinate));
-		return this;
-	}
-
-	divideAcross = (amount: number) => {
-		this.set(Coordinate.divideAcross(this, amount));
-		return this;
-	}
-
-	isEqual = (coordinate: coordinate) => {
-		return Coordinate.isEqual(this, coordinate);
-	}
-
-	compare = (coordinate: coordinate) => {
-		return Coordinate.compare(this, coordinate);
-	}
-
 	addForce = (vector: IVector, force: number): this => {
 		return Vect.addForce(this, vector, force) as this;
 	}
@@ -121,9 +66,6 @@ export abstract class Vect implements IVector {
 	}
 
 	constructor (coordinate?: coordinate) {
-		[this.x, this.y] = [
-			coordinate?.x ?? Coordinate.zero.x,
-			coordinate?.y ?? Coordinate.zero.y
-		];
+		super(coordinate);
 	}
 }

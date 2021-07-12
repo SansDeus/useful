@@ -22,7 +22,7 @@ export const Animate = (
 		const elapsed = now - frameCheck;
 		if (elapsed > frameRate) {
 			frameCheck = now - (elapsed % frameRate);
-			const pct = Math.max(0, Math.min(1, resumePct ?? (timePast / diff)));
+			const pct = Math.max(0, Math.min(1, (resumePct === 1 ? undefined : resumePct) ?? (timePast / diff)));
 			if (resumePct) { resumePct = undefined };
 			action(pct);
 		}

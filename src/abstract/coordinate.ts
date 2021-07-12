@@ -1,5 +1,6 @@
 import { coordinate } from '../types/coordinate';
 import { ICoordinate} from '../interfaces/ICoordinate';
+import { Ecliptic } from '../ecliptic';
 
 export abstract class Coordinate implements ICoordinate {
 	x: number;
@@ -52,6 +53,14 @@ export abstract class Coordinate implements ICoordinate {
 		return { x: s(primary.x, secondary.x), y: s(primary.y, secondary.y) };
 	}
 
+	static radian = (primary: coordinate, target: coordinate) => {
+		return Ecliptic.Radian(primary, target);
+	}
+
+	static degree = (primary: coordinate, target: coordinate) => {
+		return Ecliptic.Degree(primary, target);
+	}
+
 	static get zero () {
 		return { x: 0, y: 0 };
 	}
@@ -63,6 +72,7 @@ export abstract class Coordinate implements ICoordinate {
 
 	public set = (coordinate: coordinate) => {
 		[this.x, this.y] = [coordinate.x, coordinate.y];
+		return this;
 	}
 
 	public add = (coordinate: coordinate) => {
@@ -103,6 +113,14 @@ export abstract class Coordinate implements ICoordinate {
 	public divideAcross = (amount: number) => {
 		this.set(Coordinate.divideAcross(this, amount));
 		return this;
+	}
+
+	public radians = (target: coordinate) => {
+		return Coordinate.radian(this, target);
+	}
+
+	public degree = (target: coordinate) => {
+		return Coordinate.degree(this, target);
 	}
 
 	public isEqual = (coordinate: coordinate) => {

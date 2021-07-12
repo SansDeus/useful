@@ -63,7 +63,7 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 
 		let force = PhysicsVect.New.set(Coordinate.subtract(primary, secondary));
 		const distance = Clamp(force.magnitude, primary.distanceClamp.min, primary.distanceClamp.max);
-		force.normalize;
+		force.normalize();
 		const strength = (primary.gravity * (primary.mass * secondary.mass)) / Math.pow(distance, 2);
 		return force.multiplyAcross(strength);
 	}

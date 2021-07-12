@@ -12,4 +12,6 @@ export interface ICoordinate extends coordinate {
 	isEqual: (coordinate: coordinate) => boolean;
 	compare: (coordinate: coordinate) => coordinate;
 	set: (coordinate: coordinate) => void;
+	radians: (target: coordinate) => number;
+	degree: (target: coordinate) => number;
 }
