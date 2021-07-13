@@ -1,5 +1,11 @@
 import { Decasteljau } from './decasteljau';
 import { ICoordinate3d } from './interfaces/ICoordinate3d';
+/**
+ * 
+ * @param points ICoordinate3d[]
+ * @param percent number
+ * @returns ICoordinate3d
+ */
 export const ThreeD = (points: ICoordinate3d[], percent: number) => {
 	return { 
 		x: Decasteljau(points.map((p) => p.x), percent),

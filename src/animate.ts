@@ -1,3 +1,8 @@
+/**
+ * 
+ * @param action (pct: number) => void
+ * @param options { fps?: number, duration?: number, resumePct?: number, stop?: () => boolean, cb?: () => void }
+ */
 export const Animate = (
 	action: (pct: number) => void,
 	options?: { fps?: number, duration?: number, resumePct?: number, stop?: () => boolean, cb?: () => void }) => {

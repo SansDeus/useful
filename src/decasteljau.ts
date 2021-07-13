@@ -1,4 +1,10 @@
 import { Lerp } from './lerp';
+/**
+ * 
+ * @param points number[]
+ * @param percent number
+ * @returns number
+ */
 export const Decasteljau = (points: number[], percent: number): number => {
 	if (points.length === 1) return points[0];
 	const results = [...points];

@@ -24,7 +24,13 @@ export class ColorPercent {
 		if(rxc) return rxc.converter(rxc.regex.exec(color));
 		throw new Error('getRgb: Invalid color.');
 	}
-                                                   
+
+	/**
+	 * 
+	 * @param colorList string[]: ['#ff0000', '#0000FF']
+	 * @param percent number: .03
+	 * @returns hex color.
+	 */
 	static getColor = (colorList: string[], percent: number) => {
 		const stepInfo = colorList.calculateStep(percent);
 		const color = (position: number) => {

@@ -31,6 +31,12 @@ export class SmoothScroll {
 		}
 	}
 
+	/**
+	 * 
+	 * @param element HTMLElement
+	 * @param options IScrollOptions
+	 * @returns
+	 */
 	getLocation(element: HTMLElement, options?: IScrollOptions) {
 		return { 
 			bounds: element.getBoundingClientRect(),
@@ -41,6 +47,11 @@ export class SmoothScroll {
 		};
 	}
 
+	/**
+	 * 
+	 * @param element HTMLElement
+	 * @param options IScrollOptions
+	 */
 	scroll(element: HTMLElement, options?: IScrollOptions) {
 		this.disablePointerEvents();
 		const easeFunc = options && options.easingFunc ? options.easingFunc : Easing.linear;

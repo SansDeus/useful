@@ -9,6 +9,7 @@ export interface IPhysicsVector extends IVector {
 	distanceClamp: minMax;
 	attract: (target: IPhysicsVector) => this;
 	applyForce: (force: IVector) => this;
+	addGravity: (gravity: number, axis?: 'x' | 'y') => this;
 	updateGravity: () => this;
 	drag: (params: dragOptions) => this;
 }

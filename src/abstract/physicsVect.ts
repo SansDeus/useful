@@ -27,8 +27,18 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		velocity: Vector.New
 	}
 
+	/**
+	 * 
+	 * @param m number
+	 * @param d number
+	 * @returns 
+	 */
 	protected volume = (m: number, d: number) => m / d;
 
+	/**
+	 * 
+	 * @param params PhysicsVectorOptions
+	 */
 	constructor(params?: PhysicsVectorOptions) {
 		super(params?.coordinate);
 		const opts = { ...PhysicsVect.defaultOptions, ...params };
@@ -52,6 +62,12 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		this.restitution = opts.restitution;
 	}
 
+	/**
+	 * 
+	 * @param primary IPhysicsVector
+	 * @param secondary IPhysicsVector
+	 * @returns Vector
+	 */
 	public static attract = (primary: IPhysicsVector, secondary: IPhysicsVector) => {
 		if (!primary.mass || isNaN(primary.mass) || !secondary.mass || isNaN(secondary.mass)) {
 			throw new Error('attract: Main and target must have mass.');
@@ -68,6 +84,12 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		return force.multiplyAcross(strength);
 	}
 	
+	/**
+	 * 
+	 * @param vector IPhysicsVector
+	 * @param force IVector
+	 * @returns IPhysicsVector
+	 */
 	public static applyForce = (vector: IPhysicsVector, force: IVector) => {
 		if (!vector.mass || isNaN(vector.mass)) {
 			throw new Error('applyForce: Vector must have mass');
@@ -80,6 +102,12 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		return vector;
 	}
 
+	/**
+	 * 
+	 * @param vector IPhysicsVector
+	 * @param dragOptions dragOptions
+	 * @returns IPhysicsVector
+	 */
 	public static drag = (vector: IPhysicsVector, dragOptions: dragOptions) => {
 		if (!vector.velocity) return vector;
 		const { density, area, reynolds, coefficient } = dragOptions;
@@ -88,6 +116,26 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		return vector;
 	}
 
+	/**
+	 * 
+	 * @param vector IPhysicsVector
+	 * @param gravity number
+	 * @param axis 'x' | 'y' default 'y'
+	 * @returns IPhysicsVector
+	 */
+	public static addGravity = (vector: IPhysicsVector, gravity: number, axis: 'x' | 'y' = 'y') => {
+		if (!vector.velocity) {
+			throw new Error('Vector velocity is undefined.');
+		}
+		vector.velocity.add({ x: axis === 'x' ? gravity : 0, y: axis === 'y' ? gravity : 0 });
+		return vector;
+	}
+
+	/**
+	 * 
+	 * @param vector IPhysicsVector
+	 * @returns IPhysicsVector
+	 */
 	public static updateGravity = (vector: IPhysicsVector) => {
 		if (!vector.velocity || !vector.acceleration) {
 			throw new Error('Vector velocity or acceleration are undefined.');
@@ -99,18 +147,47 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		return vector;
 	}
 
+	/**
+	 * 
+	 * @param gravity number
+	 * @param axis 'x' | 'y" optional
+	 * @returns this
+	 */
+	public addGravity = (gravity: number, axis?: 'x' | 'y'): this => {
+		return PhysicsVect.addGravity(this, gravity, axis) as this;
+	}
+
+	/**
+	 * 
+	 * @param target IPhysicsVector
+	 * @returns this
+	 */
 	public attract = (target: IPhysicsVector): this => {
 		return PhysicsVect.attract(this, target) as this;
 	}
 
+	/**
+	 * 
+	 * @param force IVector
+	 * @returns this
+	 */
 	public applyForce = (force: IVector): this => {
 		return PhysicsVect.applyForce(this, force) as this;
 	}
 
+	/**
+	 * 
+	 * @param dragOptions dragOptions
+	 * @returns this
+	 */
 	public drag = (dragOptions: dragOptions): this => {
 		return PhysicsVect.drag(this, dragOptions) as this;
 	}
 
+	/**
+	 * 
+	 * @returns this
+	 */
 	public updateGravity = (): this => {
 		return PhysicsVect.updateGravity(this) as this;
 	}

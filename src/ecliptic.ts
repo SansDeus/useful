@@ -8,13 +8,38 @@ export class Ecliptic {
 	private static deadXY = { x: 0, y: 0 };
 	private static tau = Math.PI * 2;
 	private static deg2Rad = Ecliptic.tau / 360;
+	/**
+	 * 
+	 * @param count number
+	 * @returns number
+	 */
 	static EqualRadians = (count: number) => Ecliptic.tau / count;
+	/**
+	 * 
+	 * @param count number
+	 * @returns number
+	 */
 	static EqualDegrees = (count: number) => 360 / count;
+	/**
+	 * 
+	 * @param radian number
+	 * @returns number
+	 */
 	static ToDegree = (radian: number) => (radian >= 0 ? radian : (Ecliptic.tau + radian)) * 360 / Ecliptic.tau;
+	/**
+	 * 
+	 * @param degree number
+	 * @returns number
+	 */
 	static ToRadian = (degree: number) => degree * Ecliptic.deg2Rad;
 
+	/**
+	 * Extracts a set transform coordinates
+	 * @param elm HTMLElement
+	 * @returns coordinate
+	 */
 	public static TransformCoordinates = (elm: HTMLElement): coordinate => {
-		const coordRx = /([\d\.]+)/g;
+		const coordRx = /(-?[\d\.]+)/g;
 		const result = elm.style.transform.match(coordRx);
 		return result ? { x: +result[0], y: +result[1] } : Ecliptic.deadXY;
 	}
@@ -62,15 +87,34 @@ export class Ecliptic {
 		});
 	}
 
+	/**
+	 * 
+	 * @param origin coordinate
+	 * @param target coordinate
+	 * @returns number
+	 */
 	static Radian = (origin: coordinate, target: coordinate) => {
 		const [dx, dy] = [origin.x - target.x, origin.y - target.y];
 		return Math.atan2(dy, dx);
 	}
 
+	/**
+	 * 
+	 * @param origin coordinate
+	 * @param target coordinate
+	 * @returns number
+	 */
 	static Degree = (origin: coordinate, target: coordinate) => {
 		return Ecliptic.ToDegree(Ecliptic.Radian(origin, target));
 	}
 
+	/**
+	 * 
+	 * @param center HTMLElement | coordinate
+	 * @param radius number
+	 * @param radian number
+	 * @returns coordinate
+	 */
 	static LocationByRadian = (center: htmlCoordinate, radius: number, radian: number) => {
 		center = (center instanceof HTMLElement) ? Ecliptic.itemLocation(center) : center;
 		return {
@@ -79,11 +123,25 @@ export class Ecliptic {
 		};
 	}
 
+	/**
+	 * 
+	 * @param center HTMLElement | coordinate
+	 * @param radius number
+	 * @param degree number
+	 * @returns coordinate
+	 */
 	static LocationByDegree = (center: htmlCoordinate, radius: number, degree: number) => {
 		const radian = Ecliptic.ToRadian(ClampAngle(degree, -360, 360));
 		return Ecliptic.LocationByRadian(center, radius, radian);
 	}
 
+	/**
+	 * 
+	 * @param item coordinate
+	 * @param amount number
+	 * @param options surroundOptions
+	 * @returns coordinate[]
+	 */
 	static Surround = (item: coordinate, amount: number, options?: surroundOptions): coordinate[] => {
 		const { distance, degree, equal, spacing, amplitudeX, amplitudeY } = Ecliptic.surroundDefaults(options);
 		const { radians, center, radius } = Ecliptic.rcr(item, amount, distance);
@@ -103,6 +161,12 @@ export class Ecliptic {
 		return results;
 	}
 
+	/**
+	 * 
+	 * @param item HTMLElement
+	 * @param withItems HTMLElement[] | HTMLCollection
+	 * @param options surroundOptions
+	 */
 	static SurroundHTML = (item: HTMLElement, withItems: HTMLElement[] | HTMLCollection, options: surroundOptions) => {
 		const toPx = (val: number) => `${Math.floor(val)}px`;
 		if (withItems instanceof HTMLCollection) { withItems = Ecliptic.htmlCollectionToArray(withItems); }
