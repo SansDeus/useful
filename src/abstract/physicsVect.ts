@@ -1,5 +1,5 @@
 import { Vector } from '../vector';
-import { minMax } from '../types';
+import { coordinate, minMax } from '../types';
 import { IVector, IPhysicsVector } from '../interfaces';
 import { PhysicsVectorOptions } from '../types/physicsVectorOptions';
 import { Drag } from '../constants/calculations';
@@ -7,6 +7,7 @@ import { dragOptions } from '../types/dragOptions';
 import { DEFAULT_DENSITY, DEFAULT_DISTANCE, DEFAULT_GRAVITY, DEFAULT_MASS, DEFAULT_RESTITUTION } from '../defaults/physicsVectorOptionDefaults';
 import { Clamp } from '../clamp';
 import { Coordinate } from './coordinate';
+import { Between } from '../between';
 
 export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 	gravity: number;
@@ -135,6 +136,18 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		return vector;
 	}
 
+	public static bindToArea = (vector: IPhysicsVector, params: { min: coordinate, max: coordinate }) => {
+		if (!Between(vector.y, { min: params.min.y, max: params.max.y })) {
+			vector.velocity.y *= vector.restitution;
+			vector.y = vector.y > params.max.y ? params.max.y : params.min.y;
+		}
+
+		if (!Between(vector.x, { min: params.min.x, max: params.max.x })) {
+			vector.velocity.x *= vector.restitution;
+			vector.x = vector.x > params.max.x ? params.max.x : params.min.x;
+		}
+	}
+
 	/**
 	 * 
 	 * @param gravity number
@@ -178,6 +191,15 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 	 */
 	public updateGravity = (): this => {
 		return PhysicsVect.updateGravity(this) as this;
+	}
+
+	/**
+	 * 
+	 * @param params { min: coordinate, max: coordinate }
+	 * @returns void
+	 */
+	public bindToArea = (params: { min: coordinate, max: coordinate }) => {
+		PhysicsVect.bindToArea(this, params);
 	}
 
 }

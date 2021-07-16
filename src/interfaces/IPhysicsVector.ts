@@ -1,4 +1,4 @@
-import { dragOptions, minMax } from '../types';
+import { coordinate, dragOptions, minMax } from '../types';
 import { IVector } from './IVector';
 
 export interface IPhysicsVector extends IVector {
@@ -13,5 +13,6 @@ export interface IPhysicsVector extends IVector {
 	applyForce: (force: IVector) => this;
 	addGravity: (gravity: number, axis?: 'x' | 'y') => this;
 	updateGravity: () => this;
+	bindToArea: (params: {min: coordinate, max: coordinate }) => void;
 	drag: (params: dragOptions) => this;
 }
