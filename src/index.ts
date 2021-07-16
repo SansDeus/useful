@@ -25,3 +25,4 @@ export * from './vector';
 export * from './constants';
 export * from './types';
 export * from './interfaces';
+export * from './abstract/coordinate';

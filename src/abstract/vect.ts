@@ -3,9 +3,6 @@ import {IVector} from '../interfaces/IVector';
 import {Coordinate} from './coordinate';
 
 export abstract class Vect extends Coordinate implements IVector {
-	acceleration?: IVector;
-	velocity?: IVector;
-
 	private static distanceSquare = (p: coordinate) => Math.pow(p.x, 2) + Math.pow(p.y, 2);
 
 	// double-dog-leg hypothenuse approximation

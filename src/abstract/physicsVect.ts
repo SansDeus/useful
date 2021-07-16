@@ -23,8 +23,6 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		density: DEFAULT_DENSITY,
 		restitution: DEFAULT_RESTITUTION,
 		distanceClamp: DEFAULT_DISTANCE,
-		acceleration: Vector.New,
-		velocity: Vector.New
 	}
 
 	/**
@@ -44,19 +42,8 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		const opts = { ...PhysicsVect.defaultOptions, ...params };
 		this.gravity = opts.gravity;
 		this.mass = opts.mass;
-		this.acceleration = opts.acceleration;
-		this.velocity = opts.velocity;
-		this.distanceClamp = opts.distanceClamp;
-		this.density = opts.density;
-		this.restitution = opts.restitution;
-	}
-
-	set SetOptions (params: PhysicsVectorOptions) {
-		const opts = { ...PhysicsVect.defaultOptions, ...params };
-		this.gravity = opts.gravity;
-		this.mass = opts.mass;
-		this.acceleration = opts.acceleration;
-		this.velocity = opts.velocity;
+		this.acceleration = params?.acceleration ?? new Vector();
+		this.velocity = params?.velocity ?? new Vector();
 		this.distanceClamp = opts.distanceClamp;
 		this.density = opts.density;
 		this.restitution = opts.restitution;
@@ -77,7 +64,7 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 			throw new Error('attract: Main must have gravity.');
 		}
 
-		let force = PhysicsVect.New.set(Coordinate.subtract(primary, secondary));
+		let force = new Vector(Coordinate.subtract(primary, secondary));
 		const distance = Clamp(force.magnitude, primary.distanceClamp.min, primary.distanceClamp.max);
 		force.normalize();
 		const strength = (primary.gravity * (primary.mass * secondary.mass)) / Math.pow(distance, 2);
@@ -112,7 +99,9 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		if (!vector.velocity) return vector;
 		const { density, area, reynolds, coefficient } = dragOptions;
 		const force = Drag(density)({ area, coefficient, reynolds, velocity: vector.velocity.magnitude });
-		vector.velocity.divideAcross(force);
+		if (force !== 0) {
+			vector.velocity.divideAcross(force);
+		}
 		return vector;
 	}
 
@@ -140,7 +129,6 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		if (!vector.velocity || !vector.acceleration) {
 			throw new Error('Vector velocity or acceleration are undefined.');
 		}
-	
 		vector.velocity.add(vector.acceleration);
 		vector.add(vector.velocity);
 		vector.acceleration.set(Coordinate.zero);
