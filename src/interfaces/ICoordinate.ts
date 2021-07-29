@@ -14,4 +14,5 @@ export interface ICoordinate extends coordinate {
 	set: (coordinate: coordinate) => void;
 	radians: (target: coordinate) => number;
 	degree: (target: coordinate) => number;
+	distance: (target: coordinate) => number;
 }

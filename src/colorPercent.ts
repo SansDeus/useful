@@ -40,4 +40,12 @@ export class ColorPercent {
 		const colorDecToHex = (r: number, g: number, b: number) => `#${(1 << 24 | (r << 16) | (g << 8) | (b << 0)).toString(16).slice(1)}`;
 		return colorDecToHex(color(0), color(1), color(2));
 	}
+
+	static lighen = (color: string, percent: number) => {
+		return ColorPercent.getColor([color, '#FFFFFF'], percent);
+	}
+
+	static darken = (color: string, percent: number) => {
+		return ColorPercent.getColor([color, '#000000'], percent);
+	}
 }

@@ -153,6 +153,17 @@ export abstract class Coordinate implements ICoordinate {
 
 	/**
 	 * 
+	 * @param primary 
+	 * @param secondary 
+	 * @returns number
+	 */
+	static distance = (primary: coordinate, secondary: coordinate) => {
+		const sub = Coordinate.subtract(primary, secondary);
+		return Math.sqrt(Math.pow(sub.x, 2) + Math.pow(sub.y, 2));
+	}
+
+	/**
+	 * 
 	 * @param coordinate coordinate
 	 * @returns this
 	 */
@@ -275,6 +286,15 @@ export abstract class Coordinate implements ICoordinate {
 	 */
 	public compare = (coordinate: coordinate) => {
 		return Coordinate.compare(this, coordinate);
+	}
+
+	/**
+	 * 
+	 * @param coordinate 
+	 * @returns number
+	 */
+	public distance = (coordinate: coordinate) => {
+		return Coordinate.distance(this, coordinate);
 	}
 
 	/**
