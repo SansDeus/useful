@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/lib/commonjs",
+    "outDir": "./dist/lib/es2020",
     "target": "es2020",
-    "module": "commonjs",
+    "module": "es2020",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -11,14 +11,12 @@
     "noImplicitAny": false,
     "strict": true,
     "esModuleInterop": true,
-    "declaration": true,
-    "lib": ["DOM", "ES2020"]
+		"declaration": true,
   },
 	"include": ["src/**/*"],
   "exclude": [
-    "src/animate.ts",
     "node_modules",
-    "dist",
+		"dist",
     "test"
   ]
 }

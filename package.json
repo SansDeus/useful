@@ -1,16 +1,18 @@
 {
 	"name": "ts-useful",
-	"version": "1.1.23",
+	"version": "1.1.24",
 	"description": "Functions for animation, color transitions, ecliptic, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, random range, randomItem, mobius index, vectors, physics vectors, and easing.",
-	"main": "./lib/index.js",
 	"private": false,
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/SansDeus/useful.git"
 	},
-	"scripts": {
-		"compile": "tsc"
-	},
+  "scripts": {
+    "del": "del-cli dist/lib/**",
+    "compile": "tsc && tsc --build tsconfig.es2020.json",
+    "clean": "npm run del && npm run compile",
+    "full": "npm run clean"
+  },
 	"keywords": [
 		"Animate",
 		"Bezier",
@@ -42,6 +44,7 @@
 	"author": "Aaron Edwards",
 	"license": "MIT",
 	"devDependencies": {
+		"del-cli": "^5.0.0",
 		"typescript": "^4.3.5"
 	}
 }
