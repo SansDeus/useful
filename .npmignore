@@ -14,7 +14,6 @@ npm-debug.log
 pids
 *.pid
 *.seed
-dist
 
 # Coverage directory used by tools like istanbul
 coverage
@@ -34,4 +33,3 @@ node_modules
 #OS STUFF
 .DS_Store
 .tmp
-src
