@@ -1,5 +1,8 @@
+import { ColorVect } from './abstract/vect3';
+import { tau } from './constants';
 import './extensions/calculateStep'; 
 import { Lerp } from './lerp';
+import { vector3 } from './types/vector3';
 
 type rxCompare = { regex: RegExp, converter: (e: any) => number[] };
 export class ColorPercent {
@@ -39,6 +42,13 @@ export class ColorPercent {
 		};
 		const colorDecToHex = (r: number, g: number, b: number) => `#${(1 << 24 | (r << 16) | (g << 8) | (b << 0)).toString(16).slice(1)}`;
 		return colorDecToHex(color(0), color(1), color(2));
+	}
+
+	static makePalette = (t: number, a: vector3, b: vector3, c: vector3, d: vector3) => {
+		const calced: vector3 = <vector3> ColorVect.multiplyBy(ColorVect.multiply(c, ColorVect.addBy(d, t)), tau).map((v) => {
+			return Math.cos(v);
+		});
+		return ColorVect.multiply(ColorVect.add(a, b), calced);
 	}
 
 	static lighen = (color: string, percent: number) => {

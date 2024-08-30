@@ -3,9 +3,9 @@
  * @param action (pct: number) => void
  * @param options { fps?: number, duration?: number, resumePct?: number, stop?: () => boolean, cb?: () => void }
  */
-export const Animate = (
-	action: (pct: number) => void,
-	options?: { fps?: number, duration?: number, resumePct?: number, stop?: () => boolean, cb?: () => void }) => {
+export const Animate = async (
+	action: (pct: number) => Promise<void>,
+	options?: { fps?: number, duration?: number, resumePct?: number, stop?: () => Promise<boolean>, cb?: () => Promise<void> }) => {
 	const { stop, cb } = options ? options : { stop: undefined, cb: undefined };
 	let { duration, fps, resumePct } = options ? options : { duration: undefined, fps: undefined, resumePct: undefined };
 	duration ??= 1000; fps ??= 60;
@@ -16,12 +16,15 @@ export const Animate = (
 	const start = performance.now();
 	const endTime = start + duration;
 	const diff = endTime - start;
+	const nextFrame = () => new Promise(res => window.requestAnimationFrame(res));
 	let frameCheck = start;
 
-	function AnimateFrame() {
-		if (stop && stop()) {
+	async function AnimateFrame () {
+		const stp = stop ? await stop() : undefined;
+		if (stp) {
 			return;
 		}
+
 		const now = performance.now();
 		const timePast = now - start;
 		const elapsed = now - frameCheck;
@@ -29,13 +32,13 @@ export const Animate = (
 			frameCheck = now - (elapsed % frameRate);
 			const pct = Math.max(0, Math.min(1, (resumePct === 1 ? undefined : resumePct) ?? (timePast / diff)));
 			if (resumePct) { resumePct = undefined };
-			action(pct);
+			await action(pct);
 		}
 		if (now < endTime) {
-			window.requestAnimationFrame(AnimateFrame);
+			await AnimateFrame().then(nextFrame);
 		} else {
-			if(cb) cb();
+			if(cb) await cb();
 		}
 	};
-	window.requestAnimationFrame(AnimateFrame);
+	await AnimateFrame().then(nextFrame);
 }

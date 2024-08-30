@@ -17,14 +17,14 @@ export class SmoothScroll {
 	//	.disable-hover {
 	//		pointer-events: none;
 	//	}
-	private enablePointerEvents() {
+	private async enablePointerEvents() {
 		const body = document.body;
 		if (body.classList.contains("disable-hover")) {
 			body.classList.remove("disable-hover");
 		}
 	}
 
-	private disablePointerEvents() {
+	private async disablePointerEvents() {
 		const body = document.body;
 		if (!body.classList.contains("disable-hover")) {
 			body.classList.add("disable-hover");
@@ -37,7 +37,7 @@ export class SmoothScroll {
 	 * @param options IScrollOptions
 	 * @returns
 	 */
-	getLocation(element: HTMLElement, options?: IScrollOptions) {
+	async getLocation(element: HTMLElement, options?: IScrollOptions) {
 		return { 
 			bounds: element.getBoundingClientRect(),
 			currentY: window.pageYOffset,
@@ -52,22 +52,22 @@ export class SmoothScroll {
 	 * @param element HTMLElement
 	 * @param options IScrollOptions
 	 */
-	scroll(element: HTMLElement, options?: IScrollOptions) {
-		this.disablePointerEvents();
+	async scroll(element: HTMLElement, options?: IScrollOptions) {
+		await this.disablePointerEvents();
 		const easeFunc = options && options.easingFunc ? options.easingFunc : Easing.linear;
-		const l = this.getLocation(element, options);
-		const scroll = (pct: number) => {
+		const l = await this.getLocation(element, options);
+		const scroll = async (pct: number) => {
 			const bez = easeFunc(pct);
 			window.scrollTo(
 				l.offsetX + l.currentX + (l.bounds.left) * bez,
 				l.offsetY + l.currentY + (l.bounds.top) * bez
 			);
 		};
-		Animate(scroll, {
+		await Animate(scroll, {
 			fps: options && options.framesPerSecond ? options.framesPerSecond : this.framesPerSecond,
 			duration: options && options.duration ? options.duration : this.duration, 
-			cb: () => { 
-				this.enablePointerEvents();
+			cb: async () => { 
+				await this.enablePointerEvents();
 				if(options?.done) {
 					options.done();
 				}
