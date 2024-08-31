@@ -47,11 +47,13 @@ export class ColorPercent {
 	}
 
 	static makePalette = (t: number, a: vector3, b: vector3, c: vector3, d: vector3): string => {
-		const calced: vector3 = <vector3> ColorVect.multiplyBy(ColorVect.multiply(c, ColorVect.addBy(d, t)), tau).map((v) => {
+    const calced = ColorVect.multiplyBy(ColorVect.multiply(c, ColorVect.addBy(d, t)), tau).map((v) => {
 			return Math.cos(v);
-		});
-		let rgb = ColorVect.multiply(ColorVect.add(a, b), calced).map((v) => Clamp(Math.abs(v), 0, 1));
-		return ColorPercent.colorDecToHex(rgb[0], rgb[1], rgb[2]);
+		}) as vector3;
+		const rgb = ColorVect.multiply(ColorVect.add(a, b), calced).map((v) => Math.floor(Clamp(Math.abs(v), 0, 1) * 100));
+		const colorString = `rgb(${rgb[0]}%, ${rgb[1]}%, ${rgb[2]}%)`;
+		const result = ColorPercent.getRgb(colorString);
+		return ColorPercent.colorDecToHex(result[0], result[1], result[2]);
 	}
 
 	static lighen = (color: string, percent: number) => {
