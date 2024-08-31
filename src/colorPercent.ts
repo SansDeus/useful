@@ -1,4 +1,5 @@
 import { ColorVect } from './abstract/colorVect';
+import { Clamp } from './clamp';
 import { tau } from './constants';
 import './extensions/calculateStep'; 
 import { Lerp } from './lerp';
@@ -45,11 +46,12 @@ export class ColorPercent {
 		return ColorPercent.colorDecToHex(color(0), color(1), color(2));
 	}
 
-	static makePalette = (t: number, a: vector3, b: vector3, c: vector3, d: vector3) => {
+	static makePalette = (t: number, a: vector3, b: vector3, c: vector3, d: vector3): string => {
 		const calced: vector3 = <vector3> ColorVect.multiplyBy(ColorVect.multiply(c, ColorVect.addBy(d, t)), tau).map((v) => {
 			return Math.cos(v);
 		});
-		return ColorVect.multiply(ColorVect.add(a, b), calced);
+		let rgb = ColorVect.multiply(ColorVect.add(a, b), calced).map((v) => Clamp(Math.abs(v), 0, 1));
+		return this.colorDecToHex(rgb[0], rgb[1], rgb[2]);
 	}
 
 	static lighen = (color: string, percent: number) => {
