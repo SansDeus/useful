@@ -16,7 +16,7 @@ export const Animate = async (
 	const start = performance.now();
 	const endTime = start + duration;
 	const diff = endTime - start;
-	const nextFrame = () => new Promise(res => window.requestAnimationFrame(res));
+	const nextFrame: () => Promise<number> = () => new Promise(res => { return window.requestAnimationFrame(res) as number});
 	let frameCheck = start;
 
 	async function AnimateFrame () {
@@ -35,10 +35,12 @@ export const Animate = async (
 			await action(pct);
 		}
 		if (now < endTime) {
-			await AnimateFrame().then(nextFrame);
+			await nextFrame();
+			await AnimateFrame();
 		} else {
 			if(cb) await cb();
 		}
 	};
-	await AnimateFrame().then(nextFrame);
+	await nextFrame();
+	await AnimateFrame();
 }
