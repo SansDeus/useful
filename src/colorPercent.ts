@@ -1,4 +1,4 @@
-import { ColorVect } from './abstract/vect3';
+import { ColorVect } from './abstract/colorVect';
 import { tau } from './constants';
 import './extensions/calculateStep'; 
 import { Lerp } from './lerp';
@@ -25,8 +25,10 @@ export class ColorPercent {
 	{
 		const rxc = ColorPercent.regexArray.find((rx: rxCompare) => rx.regex.test(color));
 		if(rxc) return rxc.converter(rxc.regex.exec(color));
-		throw new Error('getRgb: Invalid color.');
+		throw new Error(`getRgb Invalid color: ${color}`);
 	}
+
+	static colorDecToHex = (r: number, g: number, b: number) => `#${(1 << 24 | (r << 16) | (g << 8) | (b << 0)).toString(16).slice(1)}`;
 
 	/**
 	 * 
@@ -40,8 +42,7 @@ export class ColorPercent {
 			const [startColor, endColor] = [ColorPercent.getRgb(stepInfo.current), ColorPercent.getRgb(stepInfo.next)];
 			return Math.floor(Lerp(startColor[position], endColor[position], stepInfo.percent));
 		};
-		const colorDecToHex = (r: number, g: number, b: number) => `#${(1 << 24 | (r << 16) | (g << 8) | (b << 0)).toString(16).slice(1)}`;
-		return colorDecToHex(color(0), color(1), color(2));
+		return ColorPercent.colorDecToHex(color(0), color(1), color(2));
 	}
 
 	static makePalette = (t: number, a: vector3, b: vector3, c: vector3, d: vector3) => {
