@@ -51,7 +51,7 @@ export class ColorPercent {
 			return Math.cos(v);
 		});
 		let rgb = ColorVect.multiply(ColorVect.add(a, b), calced).map((v) => Clamp(Math.abs(v), 0, 1));
-		return this.colorDecToHex(rgb[0], rgb[1], rgb[2]);
+		return ColorPercent.colorDecToHex(rgb[0], rgb[1], rgb[2]);
 	}
 
 	static lighen = (color: string, percent: number) => {
