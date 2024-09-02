@@ -17,6 +17,7 @@
 	"include": ["src/**/*"],
   "exclude": [
     "src/animate.ts",
+    "src/eclipticHTML.ts",
     "node_modules",
     "dist",
     "test"
