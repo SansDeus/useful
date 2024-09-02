@@ -1,4 +1,4 @@
-import { ColorVect } from './abstract/colorVect';
+import { ColorVect } from './abstract/vect3';
 import { Clamp } from './clamp';
 import { tau } from './constants';
 import './extensions/calculateStep'; 
