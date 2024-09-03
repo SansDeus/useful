@@ -136,6 +136,11 @@ export abstract class PhysicsVect extends Vector implements IPhysicsVector {
 		return vector;
 	}
 
+	/**
+	 * 
+	 * @param vector 
+	 * @param params 
+	 */
 	public static bindToArea = (vector: IPhysicsVector, params: { min: coordinate, max: coordinate }) => {
 		if (!Between(vector.y, { min: params.min.y, max: params.max.y })) {
 			vector.velocity.y *= vector.restitution;

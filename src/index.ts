@@ -26,4 +26,4 @@ export {Cd, Density, Drag, Fd, q, tau, Volume, Mass, Re} from './constants';
 export {PhysicsVectorOptions, minMax, fluid, dragOptions, coordinate, boidOptions, boidInternal, boid, bodyInMedium, attractorPartial, attractor} from './types';
 export {ICoordinate, IVector, IPhysicsVector, ICoordinate3d} from './interfaces';
 export {Coordinate} from './abstract/coordinate';
-export {ColorVect} from './abstract/vect3';
+export {ColorVect} from './abstract/colorVect';

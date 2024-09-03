@@ -3,18 +3,34 @@ import { coordinate } from "./types";
 import { surroundOptions } from "./types/surroundOptions";
 
 export class EclipticHTML {
+	/**
+	 * 
+	 * @param item 
+	 * @returns coordinate
+	 */
 	static htmlCenter = (item: HTMLElement): coordinate => {
 		if (item.style.transform) { return { x: 0, y: 0 }; }
 		const bounds = item.getBoundingClientRect();
 		return { x: (bounds.width / 2), y: (bounds.height / 2) };
 	}
 	
+	/**
+	 * 
+	 * @param item 
+	 * @returns coordinate
+	 */
 	static itemLocation = (item: HTMLElement): coordinate => {
 		if (item.style.transform) { return EclipticHTML.TransformCoordinates(item); }
 		const bounds = item.getBoundingClientRect();
 		return { x: bounds.left, y: bounds.top };
 	}
 	
+	/**
+	 * 
+	 * @param item 
+	 * @param distance 
+	 * @returns number
+	 */
 	static calcRadius = (item: HTMLElement, distance: number): number => {
 		const bounds = item.getBoundingClientRect();
 		return distance === 0 ? Math.max(bounds.width, bounds.height) : distance;

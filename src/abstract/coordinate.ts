@@ -125,6 +125,18 @@ export abstract class Coordinate implements ICoordinate {
 
 	/**
 	 * 
+	 * @param radian 
+	 * @returns (origin: coordinate, target: coordinate) => number
+	 */
+	static offsetRadians = (radian: number): (origin: coordinate, target: coordinate) => number => {
+		const fn = (origin: coordinate, target: coordinate) => {
+			return radian + Ecliptic.Radian(origin, target);
+		};
+		return fn;
+	}
+
+	/**
+	 * 
 	 * @param primary coordinate
 	 * @param target coordinate
 	 * @returns number
@@ -132,6 +144,19 @@ export abstract class Coordinate implements ICoordinate {
 	static degree = (primary: coordinate, target: coordinate) => {
 		return Ecliptic.Degree(primary, target);
 	}
+
+	/**
+	 * 
+	 * @param radian 
+	 * @returns (origin: coordinate, target: coordinate) => number
+	 */
+	static offsetDegrees = (degree: number): (origin: coordinate, target: coordinate) => number => {
+		const fn = (origin: coordinate, target: coordinate) => {
+			return degree + Ecliptic.Degree(origin, target);
+		};
+		return fn;
+	}
+
 
 	/**
 	 * @returns coordinate { x: 0, y: 0 } 
@@ -263,12 +288,30 @@ export abstract class Coordinate implements ICoordinate {
 
 	/**
 	 * 
+	 * @param radian 
+	 * @returns (target: coordinate) => number
+	 */
+	public offsetRadians = (radian: number) => (target: coordinate) => {
+		return Coordinate.offsetRadians(radian)(this, target);
+	};
+
+	/**
+	 * 
 	 * @param target coordinate
 	 * @returns number
 	 */
 	public degree = (target: coordinate) => {
 		return Coordinate.degree(this, target);
 	}
+
+	/**
+	 * 
+	 * @param degree 
+	 * @returns (target: coordinate) => number
+	 */
+	public offsetDegrees = (degree: number) => (target: coordinate) => {
+		return Coordinate.offsetDegrees(degree)(this, target);
+	};
 
 	/**
 	 * 

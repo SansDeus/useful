@@ -1,4 +1,4 @@
-import { ColorVect } from './abstract/vect3';
+import { ColorVect } from './abstract/colorVect';
 import { Clamp } from './clamp';
 import { tau } from './constants';
 import './extensions/calculateStep'; 
@@ -46,6 +46,15 @@ export class ColorPercent {
 		return ColorPercent.colorDecToHex(color(0), color(1), color(2));
 	}
 
+	/**
+	 * 
+	 * @param t number (float)
+	 * @param a vector3
+	 * @param b vector3
+	 * @param c vector3
+	 * @param d vector3
+	 * @returns Hex string
+	 */
 	static makePalette = (t: number, a: vector3, b: vector3, c: vector3, d: vector3): string => {
     const calced = ColorVect.multiplyBy(ColorVect.multiply(c, ColorVect.addBy(d, t)), tau).map((v) => {
 			return Math.cos(v);

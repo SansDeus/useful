@@ -1,3 +1,10 @@
+/**
+ * 
+ * @param num 
+ * @param index 
+ * @param x 
+ * @returns number
+ */
 export const sigma = (num: number, index: number, x: number = 1) => {
 	let sum = 0;
 	for (let i = index, e = num; i <= e; i++) {

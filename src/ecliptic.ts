@@ -1,17 +1,17 @@
 import { ClampAngle } from './clampAngle';
+import { tau } from './constants';
 import { coordinate } from './types/coordinate';
 import { surroundOptions } from './types/surroundOptions';
 
 export class Ecliptic {
 	private static deadXY = { x: 0, y: 0 };
-	private static tau = Math.PI * 2;
-	private static deg2Rad = Ecliptic.tau / 360;
+	private static deg2Rad = tau / 360;
 	/**
 	 * 
 	 * @param count number
 	 * @returns number
 	 */
-	static EqualRadians = (count: number) => Ecliptic.tau / count;
+	static EqualRadians = (count: number) => tau / count;
 	/**
 	 * 
 	 * @param count number
@@ -23,7 +23,7 @@ export class Ecliptic {
 	 * @param radian number
 	 * @returns number
 	 */
-	static ToDegree = (radian: number) => (radian >= 0 ? radian : (Ecliptic.tau + radian)) * 360 / Ecliptic.tau;
+	static ToDegree = (radian: number) => (radian >= 0 ? radian : (tau + radian)) * 360 / tau;
 	/**
 	 * 
 	 * @param degree number
