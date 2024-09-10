@@ -4,6 +4,7 @@ src/
 specs
 test
 tests
+tscofig.*
 
 # Logs
 logs
