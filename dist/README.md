@@ -122,17 +122,17 @@ const kids = document.getElementsByClassName('childItems');
 Ecliptic.SurroundHTML(parent, kids, { degree: 90, distance: 120 });
 Ecliptic.LocationByDegree(parent, 100, 180);
 ```
-## GravityVector (depricated. Use PhysicsVector)
-*GravityVector*(options: { position: coordinate, gravity: number, mass: number, distanceClamp: { min: number, max: number } });\
+## GravityVector (depricated. Renamed to PhysicsVector)
+*PhysicsVector*(options: { position: coordinate, gravity: number, mass: number, distanceClamp: { min: number, max: number } });\
 Extends Vector class.\
 *Methods*\
-attract(target: GravityVector);\
-applyForce(force: GravityVector);\
+attract(target: PhysicsVector);\
+applyForce(force: PhysicsVector);\
 update();\
 *Properties*: velocity: Vector, acceleration: Vector;
 ```
-const gv1 = new GravityVector();
-const gv2 = new GravityVector({ position: { x: 50, y: 50 } });
+const gv1 = new PhysicsVector();
+const gv2 = new PhysicsVector({ position: { x: 50, y: 50 } });
 const force = gv1.attract(gv2);
 gv2.applyForce(f);
 gv2.update();
@@ -209,6 +209,20 @@ ISwipeEvents {
 ```
 import {ThreeD} from 'ts-useful';
 const locations = ThreeD([{ x: 0, y: 0, z: 0}, { x: 10, y: 10, z: 10}], .5);
+```
+## WeylRnd
+*WeylRnd*(seed: number | undefined)
+*Methods*:\
+Shuffle(Array)\
+nextInt32(range?:[number, number]): number\
+nextInt31(): number\
+nextNumber(): number\
+nextNumber53(): number
+```
+import {WeylRng} from 'ts-useful';
+const randomNumber = new WeylRng(20);
+const randomized = randomNumber.Shuffle(['one', 'two', 'three', 'four', 'five', 'six', 'seven']);
+const fromRange = randomNumber.nextInt32([2, 100]);
 ```
 ## Vector
 *Vector*(coordinate?: coordinate);\
