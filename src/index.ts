@@ -27,3 +27,4 @@ export {PhysicsVectorOptions, minMax, fluid, dragOptions, coordinate, boidOption
 export {ICoordinate, IVector, IPhysicsVector, ICoordinate3d} from './interfaces';
 export {Coordinate} from './abstract/coordinate';
 export {ColorVect} from './abstract/colorVect';
+export { WeylRng } from './weylRnd';
