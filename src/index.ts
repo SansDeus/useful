@@ -28,3 +28,4 @@ export {ICoordinate, IVector, IPhysicsVector, ICoordinate3d} from './interfaces'
 export {Coordinate} from './abstract/coordinate';
 export {ColorVect} from './abstract/colorVect';
 export { WeylRng } from './weylRnd';
+export { vector3 } from './types/vector3';

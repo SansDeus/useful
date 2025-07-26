@@ -1,6 +1,6 @@
 {
 	"name": "ts-useful",
-	"version": "1.1.37",
+	"version": "1.1.39",
 	"description": "Functions for animation, color transitions, ecliptic, bezier, decasteljau, curves, three dimensional curves, smooth scrolling, random range, randomItem, mobius index, vectors, physics vectors, and easing.",
 	"private": false,
 	"repository": {
