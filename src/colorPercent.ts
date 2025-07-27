@@ -1,12 +1,12 @@
 import { ColorVect } from './abstract/colorVect';
 import { Clamp } from './clamp';
 import { tau } from './constants';
-import './extensions/calculateStep'; 
 import { Lerp } from './lerp';
+import { StepInfo } from './types/stepInfo';
 import { vector3 } from './types/vector3';
 
 type rxCompare = { regex: RegExp, converter: (e: any) => number[] };
-export class ColorPercent {
+export class ColorPercent extends Array {
 	private static regexArray: rxCompare[] = [
 		// #a0b1c2
 		{ regex: /#([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})/i, 
@@ -31,6 +31,18 @@ export class ColorPercent {
 
 	static colorDecToHex = (r: number, g: number, b: number) => `#${(1 << 24 | (r << 16) | (g << 8) | (b << 0)).toString(16).slice(1)}`;
 
+	static calculateStep = (arraySize: number, percent: number): StepInfo => {
+		percent = Math.max(Math.min(1, percent), 0);
+		const progress = (arraySize * percent);
+		const index = Math.floor(progress);
+		const pct = (progress - index);
+		return {
+			percent: pct,
+			current: this[index],
+			next: percent === 1 ? this[index] : this[index + 1]
+		};
+	}
+
 	/**
 	 * 
 	 * @param colorList string[]: ['#ff0000', '#0000FF']
@@ -38,7 +50,7 @@ export class ColorPercent {
 	 * @returns hex color.
 	 */
 	static getColor = (colorList: string[], percent: number) => {
-		const stepInfo = colorList.calculateStep(percent);
+		const stepInfo = ColorPercent.calculateStep(colorList.length - 1, percent);
 		const color = (position: number) => {
 			const [startColor, endColor] = [ColorPercent.getRgb(stepInfo.current), ColorPercent.getRgb(stepInfo.next)];
 			return Math.floor(Lerp(startColor[position], endColor[position], stepInfo.percent));

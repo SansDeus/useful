@@ -29,3 +29,4 @@ export {Coordinate} from './abstract/coordinate';
 export {ColorVect} from './abstract/colorVect';
 export { WeylRng } from './weylRnd';
 export { vector3 } from './types/vector3';
+export { StepInfo } from './types/stepInfo';
