@@ -33,7 +33,7 @@ export class ColorPercent extends Array {
 
 	static calculateStep = (arraySize: number, percent: number): StepInfo => {
 		percent = Math.max(Math.min(1, percent), 0);
-		const progress = (arraySize * percent);
+		const progress = ((arraySize - 1) * percent);
 		const index = Math.floor(progress);
 		const pct = (progress - index);
 		return {
@@ -50,7 +50,7 @@ export class ColorPercent extends Array {
 	 * @returns hex color.
 	 */
 	static getColor = (colorList: string[], percent: number) => {
-		const stepInfo = ColorPercent.calculateStep(colorList.length - 1, percent);
+		const stepInfo = ColorPercent.calculateStep(colorList.length, percent);
 		const color = (position: number) => {
 			const [startColor, endColor] = [ColorPercent.getRgb(stepInfo.current), ColorPercent.getRgb(stepInfo.next)];
 			return Math.floor(Lerp(startColor[position], endColor[position], stepInfo.percent));
