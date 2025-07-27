@@ -1,4 +1,5 @@
 import { ColorVect } from './abstract/colorVect';
+import { calculateStep } from './calculateStep';
 import { Clamp } from './clamp';
 import { tau } from './constants';
 import { Lerp } from './lerp';
@@ -31,18 +32,6 @@ export class ColorPercent extends Array {
 
 	static colorDecToHex = (r: number, g: number, b: number) => `#${(1 << 24 | (r << 16) | (g << 8) | (b << 0)).toString(16).slice(1)}`;
 
-	static calculateStep = (arraySize: number, percent: number): StepInfo => {
-		percent = Math.max(Math.min(1, percent), 0);
-		const progress = ((arraySize - 1) * percent);
-		const index = Math.floor(progress);
-		const pct = (progress - index);
-		return {
-			percent: pct,
-			current: this[index],
-			next: percent === 1 ? this[index] : this[index + 1]
-		};
-	}
-
 	/**
 	 * 
 	 * @param colorList string[]: ['#ff0000', '#0000FF']
@@ -50,7 +39,7 @@ export class ColorPercent extends Array {
 	 * @returns hex color.
 	 */
 	static getColor = (colorList: string[], percent: number) => {
-		const stepInfo = ColorPercent.calculateStep(colorList.length, percent);
+		const stepInfo = calculateStep<string>(colorList, percent);
 		const color = (position: number) => {
 			const [startColor, endColor] = [ColorPercent.getRgb(stepInfo.current), ColorPercent.getRgb(stepInfo.next)];
 			return Math.floor(Lerp(startColor[position], endColor[position], stepInfo.percent));
